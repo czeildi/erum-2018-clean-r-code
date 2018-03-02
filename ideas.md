@@ -1,3 +1,31 @@
+## Megbeszeles 03. 01.
+
+struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktorálás megbeszélés, adott refaktorálásról pici "elméleti"  háttér, esetleg refaktorálásnál megbeszélni a résztvevők által adott megoldásokat, hogy mi benne a jó, hogy lehetne mágjobb
+
+4-5 30 perces modul fér bele
+
+közepén legyen 30 perces szünet
+
+valami Emarsysos elemzés preparálva, torzított adatokkal, esetleg account home location eloszlás, vagy valami ilyesmi? több réteg, de viszonylag egyszerű, csak leíró elemzés
+
+### infrastruktúra
+
+- GCP-n felhúzunk mindenkinek dockerben egy rstudio servert előre telepített csomagokkal, kiinduló scripttel
+- dropboxon keresztül időnként újabb és újabb hintek, code snippetek, megoldások?
+
+Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
+
+dplyr vs data.table? ggplot2 mindenképpen
+
+- végig rmarkdown?
+- elején függvény, elnevezés
+  - nem kell 3x ismétlődés, hogy érdemes legyen valamit függvénybe kiemelni
+- legvége parametrized rmarkdown: egyes ügyfeleknek akarunk bizonyos időszakra reportot küldeni
+
+keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
+
+------------------------------------------------
+
 ## Meta
 
 - legyen főpróba a CEUn
