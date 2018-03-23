@@ -6,12 +6,13 @@ struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktor
 
 közepén legyen 30 perces szünet
 
-valami Emarsysos elemzés preparálva, torzított adatokkal, esetleg account home location eloszlás, vagy valami ilyesmi? több réteg, de viszonylag egyszerű, csak leíró elemzés
+account home location related analysis
 
 ### infrastruktúra
 
 - GCP-n felhúzunk mindenkinek dockerben egy rstudio servert előre telepített csomagokkal, kiinduló scripttel
 - dropboxon keresztül időnként újabb és újabb hintek, code snippetek, megoldások?
+- [rstudio cloud?](https://rstudio.cloud/)
 
 Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
 
