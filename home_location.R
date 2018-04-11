@@ -5,8 +5,7 @@ purrr::walk(list.files("R", full.names = TRUE), source)
 
 client_meta_data <- read_csv("data/client_meta_data.csv")
 country_meta_data <- read_csv("data/country_meta_data.csv", na = "")
-home_cities <- data.table::fread("gunzip -c data/home_cities_frequent.csv.gz") %>%
-    as.tibble()
+home_cities <- load_home_cities()
 
 # initial exploration -----------------------------------------------------
 
@@ -26,4 +25,8 @@ arrangeRegionsByPopulation(home_cities, country_code)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
+
+
+# capital city effect -----------------------------------------------------
+
 
