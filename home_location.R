@@ -25,3 +25,6 @@ home_cities %>%
     summarise(num_contact = sum(num_contact)) %>%
     arrange(desc(num_contact)) %>%
     head()
+
+# for the purpose of comparing coutries we do not want to fully filter empty
+# city information
