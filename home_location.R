@@ -20,17 +20,10 @@ relevant_home_cities <- filterRegionlessCountries(home_cities)
 
 filter(home_cities, country_code == "")
 
-home_cities %>%
-    group_by(country_code, city) %>%
-    summarise(num_contact = sum(num_contact)) %>%
-    arrange(desc(num_contact)) %>%
-    head(10)
+arrangeRegionsByPopulation(home_cities, country_code, city)
+arrangeRegionsByPopulation(home_cities, city)
+arrangeRegionsByPopulation(home_cities, country_code)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
 
-home_cities %>%
-    group_by(country_code) %>%
-    summarise(num_contact = sum(num_contact)) %>%
-    arrange(desc(num_contact)) %>%
-    head(10)
