@@ -6,8 +6,6 @@ struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktor
 
 közepén legyen 30 perces szünet
 
-account home location related analysis
-
 ### infrastruktúra
 
 - GCP-n felhúzunk mindenkinek dockerben egy rstudio servert előre telepített csomagokkal, kiinduló scripttel
@@ -15,8 +13,6 @@ account home location related analysis
 - [rstudio cloud?](https://rstudio.cloud/)
 
 Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
-
-dplyr vs data.table? ggplot2 mindenképpen
 
 - végig rmarkdown?
 - elején függvény, elnevezés
@@ -29,8 +25,6 @@ keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
 
 ## Meta
 
-- legyen főpróba a CEUn
-- use packrat for development, but remove packrat from final workshop version
 - make changes in parallel to two versions: one clean and not so clean
 
 ## Principles

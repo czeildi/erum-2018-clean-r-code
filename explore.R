@@ -1,7 +1,7 @@
-library(readr)
+library("tidyverse")
+library("magrittr")
+library("plotly")
 library(data.table)
-library(magrittr)
-library(ggplot2)
 
 # read data ---------------------------------------------------------------
 
@@ -10,6 +10,7 @@ home_cities <- fread("gunzip -c data/extended_home_cities_frequent.csv.gz")
 
 
 # explore capital city effect ---------------------------------------------
+# ez nem emarsysos adatbol igazabol ertelmesebb lenne
 
 # lehet accountok kozott atfedes, ezt most elhanyagoljuk
 city_aggr <- home_cities[, .(num_contact = sum(num_contact)), by = .(country, city)]
@@ -122,9 +123,20 @@ dt[, .(num_contact = sum(num_contact)), by = .(continent, industry)] %>%
 
 # ugyanez total populationnel kontrollalva (kulso adatbazisbol?)
 
+
+# melyik regio fontosabb travelben vs ecommerceben
+# travel 
 # UK: too long name
 
 
 # where are those with few locations? -------------------------------------
 
 
+# which countries canbe strong markets alone? -----------------------------
+
+account_countries %>% 
+    .[account_population >= 1000,] %>% 
+    .[, .(avg_country_share = mean(country_share)), by = country] %>% 
+    .[order(avg_country_share)]
+
+# es ez country total populationhez kepest?    
