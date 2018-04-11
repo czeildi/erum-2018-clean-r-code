@@ -35,27 +35,19 @@ arrange_regions_by_population(home_cities, country_code) %>%
 city_populations <- arrange_regions_by_population(home_cities, country_code, city)
 
 share_of_strongest_city <- city_populations %>%
-    arrange_regions_by_population(country_code, city) %>%
-    group_by(country_code) %>%
-    mutate(country_population = sum(num_contact)) %>%
+    add_country_population() %>%
     filter_small_countries() %>%
     filter_missing_city() %>%
-    group_by(country_code) %>%
-    mutate(max_city_share = max(num_contact / country_population)) %>%
-    filter(num_contact / country_population == max_city_share) %>%
-    select(country_code, country_population, city, share_of_contacts = max_city_share) %>%
-    arrange(desc(share_of_contacts))
+    keep_strongest_city()
     
 num_cities_for_coverage <- city_populations %>%
-    arrange_regions_by_population(country_code, city) %>%
-    group_by(country_code) %>%
-    mutate(country_population = sum(num_contact)) %>%
+    add_country_population() %>%
     filter_small_countries() %>%
     filter_missing_city() %>%
-    arrange(country_code, desc(num_contact)) %>% 
-    group_by(country_code) %>% 
-    mutate(contact_coverage = cumsum(num_contact) / country_population, city_rank = min_rank(num_contact)) %>%
-    filter(contact_coverage <= 0.8 | city_rank == 1) %>%
+    keep_cities_for_coverage() %>%
     group_by(country_code) %>%
-    summarise(country_population = mean(country_population), num_city = n(), coverage = max(contact_coverage)) %>%
-    arrange(num_city)
+    summarise(
+        country_population = mean(country_population),
+        num_city = n(),
+        coverage = max(contact_coverage)
+    )
