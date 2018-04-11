@@ -1,4 +1,4 @@
-arrangeRegionsByPopulation <- function(df, ...) {
+arrange_regions_by_population <- function(df, ...) {
     region_vars <- quos(...)
     df %>%
         group_by(!!!region_vars) %>%

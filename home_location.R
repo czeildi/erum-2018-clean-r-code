@@ -14,14 +14,14 @@ home_cities <- load_home_cities()
 country_meta_data[!complete.cases(country_meta_data), ]
 filter(home_cities, country_code == "CX" | country_code == "IO")
 
-relevant_country_meta_data <- filterRegionlessCountries(country_meta_data)
-relevant_home_cities <- filterRegionlessCountries(home_cities)
+relevant_country_meta_data <- filter_regionless_countries(country_meta_data)
+relevant_home_cities <- filter_regionless_countries(home_cities)
 
 filter(home_cities, country_code == "")
 
-arrangeRegionsByPopulation(home_cities, country_code, city)
-arrangeRegionsByPopulation(home_cities, city)
-arrangeRegionsByPopulation(home_cities, country_code)
+arrange_regions_by_population(home_cities, country_code, city)
+arrange_regions_by_population(home_cities, city)
+arrange_regions_by_population(home_cities, country_code)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
