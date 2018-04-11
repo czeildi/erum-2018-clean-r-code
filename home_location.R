@@ -51,3 +51,14 @@ num_cities_for_coverage <- city_populations %>%
         num_city = n(),
         coverage = max(contact_coverage)
     )
+
+
+# num countries by clients ------------------------------------------------
+
+
+# industry comparison in regions ------------------------------------------
+
+
+# emarsys contacts vs population ------------------------------------------
+
+
