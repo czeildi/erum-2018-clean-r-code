@@ -9,8 +9,6 @@ home_cities <- load_home_cities()
 
 # initial exploration -----------------------------------------------------
 
-# possibly use skimr, visdat
-
 country_meta_data[!complete.cases(country_meta_data), ]
 filter(home_cities, country_code == "CX" | country_code == "IO")
 
@@ -20,13 +18,21 @@ relevant_home_cities <- filter_regionless_countries(home_cities)
 filter(home_cities, country_code == "")
 
 arrange_regions_by_population(home_cities, country_code, city)
-arrange_regions_by_population(home_cities, city)
+arrange_regions_by_population(home_cities, country_code, city) %>%
+    arrange(num_contact)
 arrange_regions_by_population(home_cities, country_code)
+arrange_regions_by_population(home_cities, country_code) %>%
+    arrange(num_contact)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
 
+# TODO plot each city on worldmap
+# TODO plot country populations on worldmap
 
 # capital city effect -----------------------------------------------------
 
+city_populations <- arrange_regions_by_population(home_cities, country_code, city)
 
+# share_of_strongest_city <- city_populations %>%
+    
