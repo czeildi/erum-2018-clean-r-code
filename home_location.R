@@ -24,7 +24,13 @@ home_cities %>%
     group_by(country_code, city) %>%
     summarise(num_contact = sum(num_contact)) %>%
     arrange(desc(num_contact)) %>%
-    head()
+    head(10)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
+
+home_cities %>%
+    group_by(country_code) %>%
+    summarise(num_contact = sum(num_contact)) %>%
+    arrange(desc(num_contact)) %>%
+    head(10)
