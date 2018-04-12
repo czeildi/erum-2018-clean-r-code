@@ -21,6 +21,18 @@ Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folyt
 
 keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
 
+====================
+
+04. 12
+
+fuggvenyek ott maradjanak ugyanabban a fajlban?
+
+2 elemzesunk van --> elson tanulsz, masodikon gyakorolsz
+
+3 fo lepes: adatbeolvasas, summarise, plot
+
+mukodo kodot kapjanak
+
 ------------------------------------------------
 
 ## Meta

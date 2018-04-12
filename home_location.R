@@ -6,6 +6,7 @@ purrr::walk(list.files("R", full.names = TRUE), source)
 client_meta_data <- read_csv("data/client_meta_data.csv")
 country_meta_data <- read_csv("data/country_meta_data.csv", na = "")
 home_cities <- load_home_cities()
+# read csv is tud csv.gz-t kezelni
 
 # initial exploration -----------------------------------------------------
 
@@ -33,13 +34,16 @@ arrange_regions_by_population(home_cities, country_code) %>%
 # capital city effect -----------------------------------------------------
 
 city_populations <- arrange_regions_by_population(home_cities, country_code, city)
-
+# legyen kulon rendezett es nem rendezett fuggveny
 share_of_strongest_city <- city_populations %>%
     add_country_population() %>%
     filter_small_countries() %>%
     filter_missing_city() %>%
     keep_strongest_city()
     
+# itt is ki akarjuk szurni missing cityket?
+# first after 0.8 would make more sense
+
 num_cities_for_coverage <- city_populations %>%
     add_country_population() %>%
     filter_small_countries() %>%
@@ -52,12 +56,13 @@ num_cities_for_coverage <- city_populations %>%
         coverage = max(contact_coverage)
     )
 
+# move group by + sumarise to function
 
-# num countries by clients ------------------------------------------------
+# num countries by clients and industry comparison ------------------------------------------------
 
 
 # industry comparison in regions ------------------------------------------
-
+# ez mar inkabb backupnak vszeg nem lesz ra ido
 
 # emarsys contacts vs population ------------------------------------------
 

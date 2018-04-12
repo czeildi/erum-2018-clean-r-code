@@ -5,6 +5,7 @@ arrange_regions_by_population <- function(df, ...) {
         summarise(num_contact = sum(num_contact)) %>%
         arrange(desc(num_contact))
 }
+# TODO do without tidyeval and without deprecated code
 
 add_country_population <- function(df) {
     df %>% 
