@@ -45,9 +45,15 @@ home_cities %>%
         size = ~log(num_contact)
     )
 
-
-# TODO plot each city on worldmap
-# TODO plot country populations on worldmap
+home_cities %>% 
+    summarize_population_by_region(country_code) %>% 
+    inner_join(countries, by = "country_code") %>% 
+    plot_geo(locations = ~iso3c) %>% 
+    add_trace(
+        z = ~log(num_contact), 
+        text = ~paste(country, prettyNum(num_contact, big.mark = " "), sep = "<br />"),
+        showscale = FALSE
+    )
 
 # capital city effect -----------------------------------------------------
 
