@@ -23,19 +23,19 @@ glimpse_extreme_regions(home_cities, countries, country_code)
 check_multiple_city_coords(home_cities)
 
 home_cities %>% 
-    summarize_population_by_region(country_code, city) %>% 
+    summarize_population(country_code, city) %>% 
     keep_relevant_cities(population_limit = 1000) %>% 
     attach_city_metadata(countries, home_cities) %>% 
     plot_city_nums(col_name = "num_contact")
 
 home_cities %>% 
-    summarize_population_by_region(country_code) %>% 
+    summarize_population(country_code) %>% 
     plot_country_nums(countries, col_name = "num_contact", num_scaler = log10)
 
 # capital city effect -----------------------------------------------------
 
 relative_city_populations <- home_cities %>% 
-    summarize_population_by_region(country_code, city) %>% 
+    summarize_population(country_code, city) %>% 
     calculate_relative_city_populations()
 
 relative_city_populations %>% 
@@ -46,12 +46,20 @@ relative_city_populations %>%
     count_cities_for_coverage(min_coverage = 0.8) %>% 
     plot_country_nums(countries, "num_city", num_scaler = log10)
 
+
+
+
 # num countries by clients and industry comparison ------------------------------------------------
+clients <- read_csv("data/clients.csv")
 
 
 # industry comparison in regions ------------------------------------------
-# ez mar inkabb backupnak vszeg nem lesz ra ido
 
-# emarsys contacts vs population ------------------------------------------
-
-
+home_cities %>% 
+    inner_join(clients, by = "client_id") %>% 
+    summarize_population(industry, country_code) %>% 
+    add_country_population() %>% 
+    mutate(share_of_industry = num_contact / country_population) %>% 
+    filter(industry == 'eCommerce') %>% 
+    plot_country_nums(countries, "share_of_industry") %>% 
+    layout(title = "Share of eCommerce")

@@ -7,7 +7,7 @@ calculate_relative_city_populations <- function(city_populations) {
 
 glimpse_extreme_regions <- function(home_cities, countries, ...) {
     arranged_regions <- home_cities %>% 
-        summarize_population_by_region(...) %>% 
+        summarize_population(...) %>% 
         arrange(desc(num_contact))
     
     extreme_regions <- rbind(
@@ -17,7 +17,7 @@ glimpse_extreme_regions <- function(home_cities, countries, ...) {
     use_country_names(extreme_regions, countries)
 }
 
-summarize_population_by_region <- function(df, ...) {
+summarize_population <- function(df, ...) {
     df %>% 
         group_by(...) %>% 
         summarize(num_contact = sum(num_contact)) %>%
