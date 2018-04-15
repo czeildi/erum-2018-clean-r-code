@@ -12,48 +12,26 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 countries[!complete.cases(countries), ]
 home_cities[!complete.cases(home_cities), ]
 
-countMissingByColumns(home_cities)
+count_missing_by_column(home_cities)
 
-home_cities %>%
-    group_by(missing_city = is.na(city)) %>% 
-    summarize(
-        num_contact = sum(num_contact),
-        num_country = n_distinct(country_code)
-    )
+# coord atlagolas miatt missing city info alapbol eleg fura...
+spread_of_missing_cities(home_cities)
 
-use_country_names <- purrr::partial(use_country_names_from, countries = countries)
+glimpse_extreme_regions(home_cities, countries, country_code, city)
+glimpse_extreme_regions(home_cities, countries, country_code)
 
-glimpse_extreme_regions(home_cities, country_code, city) %>% 
-    use_country_names()
-glimpse_extreme_regions(home_cities, country_code) %>% 
-    use_country_names()
+check_multiple_city_coords(home_cities)
 
 home_cities %>% 
-    group_by(country_code, city) %>% 
-    summarize(n_coord = n_distinct(long, lat)) %>% 
-    filter(n_coord > 1) %>% 
-    group_by(missing_city = is.na(city)) %>% 
-    summarize(n_city = n(), avg_num_coord = mean(n_coord))
-
-home_cities %>% 
-    filter_missing_city() %>% 
-    summarize_population_by_region(country_code, city, long, lat) %>% 
-    filter(num_contact >= 1000) %>% 
-    plot_geo(lat = ~lat, lon = ~long) %>%
-    add_markers(
-        text = ~str_c(country_code, city, num_contact, sep = "<br />"),
-        size = ~log(num_contact)
-    )
+    summarize_population_by_region(country_code, city) %>% 
+    keep_relevant_cities(population_limit = 1000) %>% 
+    attach_city_metadata(countries, home_cities) %>% 
+    plot_city_nums(col_name = "num_contact")
 
 home_cities %>% 
     summarize_population_by_region(country_code) %>% 
-    inner_join(countries, by = "country_code") %>% 
-    plot_geo(locations = ~iso3c) %>% 
-    add_trace(
-        z = ~log(num_contact), 
-        text = ~paste(country, prettyNum(num_contact, big.mark = " "), sep = "<br />"),
-        showscale = FALSE
-    )
+    attach_country_metadata(countries) %>% 
+    plot_country_nums(col_name = "num_contact")
 
 # capital city effect -----------------------------------------------------
 
