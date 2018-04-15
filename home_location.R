@@ -52,6 +52,27 @@ relative_city_populations %>%
 # num countries by clients and industry comparison ------------------------------------------------
 clients <- read_csv("data/clients.csv")
 
+relative_country_populations <- home_cities %>% 
+    summarize_population(client_id, country_code) %>% 
+    group_by(client_id) %>% 
+    mutate(account_population = sum(num_contact)) %>% 
+    mutate(relative_population = num_contact / account_population)
+
+relative_country_populations %>% 
+    keep_strongest_country() %>% 
+    inner_join(clients, by = "client_id") %>% 
+    ggplot(aes(x = relative_population, color = industry)) + 
+    geom_density() + 
+    scale_x_continuous(labels = scales::percent_format()) + 
+    theme_bw()
+
+relative_country_populations %>% 
+    group_by(client_id) %>% 
+    summarize(num_country = n()) %>% 
+    inner_join(clients, by = "client_id") %>% 
+    ggplot(aes(x = num_country, color = industry)) + 
+    geom_density() + 
+    theme_bw()
 
 # industry comparison in regions ------------------------------------------
 

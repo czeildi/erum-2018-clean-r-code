@@ -43,6 +43,12 @@ keep_strongest_city <- function(df) {
         filter(relative_population == max(relative_population))
 }
 
+keep_strongest_country <- function(df) {
+    df %>% 
+        group_by(client_id) %>%
+        filter(relative_population == max(relative_population))
+}
+
 count_cities_for_coverage <- function(relative_city_populations, min_coverage = 0.8) {
     relative_city_populations %>% 
         filter_cities_for_coverage(min_coverage) %>% 
