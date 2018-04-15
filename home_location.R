@@ -4,7 +4,7 @@ purrr::walk(list.files("R", full.names = TRUE), source)
 # load data ---------------------------------------------------------------
 
 countries <- read_csv("data/countries.csv", na = "")
-home_cities <- read_csv("data/home_cities_frequent.csv.gz")
+home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
 # initial exploration -----------------------------------------------------
 
@@ -13,8 +13,12 @@ home_cities[!complete.cases(home_cities), ]
 
 apply(home_cities, 2, function(x) sum(is.na(x)) )
 
-filter(home_cities, is.na(country_code))
-filter(home_cities, is.na(city))
+home_cities %>%
+    group_by(missing_city = is.na(city)) %>% 
+    summarize(
+        num_contact = sum(num_contact),
+        num_country = n_distinct(country_code)
+    )
 
 arrange_regions_by_population(home_cities, country_code, city)
 arrange_regions_by_population(home_cities, country_code, city) %>%
