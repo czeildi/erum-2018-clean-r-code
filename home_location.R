@@ -20,8 +20,10 @@ home_cities %>%
         num_country = n_distinct(country_code)
     )
 
-glimpseExtremeRegions(home_cities, country_code, city)
-glimpseExtremeRegions(home_cities, country_code)
+glimpseExtremeRegions(home_cities, country_code, city) %>% 
+    inner_join(countries, by = "country_code")
+glimpseExtremeRegions(home_cities, country_code) %>% 
+    inner_join(countries, by = "country_code")
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
