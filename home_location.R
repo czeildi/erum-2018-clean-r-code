@@ -1,4 +1,5 @@
 library("tidyverse")
+library("plotly")
 purrr::walk(list.files("R", full.names = TRUE), source)
 
 # load data ---------------------------------------------------------------
@@ -26,6 +27,43 @@ glimpse_extreme_regions(home_cities, country_code, city) %>%
     use_country_names()
 glimpse_extreme_regions(home_cities, country_code) %>% 
     use_country_names()
+
+home_cities %>% 
+    group_by(country_code, city) %>% 
+    summarize(n_coord = n_distinct(long, lat)) %>% 
+    filter(n_coord > 1) %>% 
+    group_by(missing_city = is.na(city)) %>% 
+    summarize(n_city = n(), avg_num_coord = mean(n_coord))
+
+relevant_cities <- home_cities %>% 
+    summarize_population_by_region(country_code, city, long, lat) %>% 
+    filter(num_contact >= 10000) %>% 
+    filter_missing_city()
+
+map_scatter_layout <- list(
+    showframe = FALSE,
+    showland = TRUE,
+    resolution = 50,
+    showcountries = TRUE,
+    projection = list(type = 'Mercator'),
+    landcolor = toRGB("gray80"),
+    countrycolor = toRGB("white"),
+    showcoastlines = TRUE,
+    coastlinecolor = toRGB("white"),
+    countrywidth = 0.5
+)
+
+plot_geo(relevant_cities, lat = ~lat, lon = ~long) %>%
+    add_markers(
+        text = ~num_contact,
+        color = ~log(num_contact),
+        hoverinfo = "text"
+    ) %>%
+    colorbar(title = "Number of contacts") %>%
+    layout(
+        title = 'Relevant cities by contact nums', geo = map_scatter_layout
+    )
+
 
 # TODO plot each city on worldmap
 # TODO plot country populations on worldmap
