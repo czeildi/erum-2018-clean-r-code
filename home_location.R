@@ -11,10 +11,6 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 countries[!complete.cases(countries), ]
 home_cities[!complete.cases(home_cities), ]
 
-# extract function keyboard shortcut
-countMissingByColumns <- function(home_cities) {
-    apply(home_cities, 2, function(x) sum(is.na(x)) )
-}
 countMissingByColumns(home_cities)
 
 home_cities %>%
@@ -24,11 +20,16 @@ home_cities %>%
         num_country = n_distinct(country_code)
     )
 
-arrange_regions_by_population(home_cities, country_code, city)
-arrange_regions_by_population(home_cities, country_code, city) %>%
+summarize_population_by_region(home_cities, country_code, city) %>% 
+    arrange(desc(num_contact))
+
+summarize_population_by_region(home_cities, country_code, city) %>% 
     arrange(num_contact)
-arrange_regions_by_population(home_cities, country_code)
-arrange_regions_by_population(home_cities, country_code) %>%
+
+summarize_population_by_region(home_cities, country_code) %>% 
+    arrange(desc(num_contact))
+
+summarize_population_by_region(home_cities, country_code) %>% 
     arrange(num_contact)
 
 # for the purpose of comparing coutries we do not want to fully filter empty

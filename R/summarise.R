@@ -1,11 +1,8 @@
-arrange_regions_by_population <- function(df, ...) {
-    region_vars <- quos(...)
-    df %>%
-        group_by(!!!region_vars) %>%
-        summarise(num_contact = sum(num_contact)) %>%
-        arrange(desc(num_contact))
+summarize_population_by_region <- function(df, ...) {
+    df %>% 
+        group_by(...) %>% 
+        summarize(num_contact = sum(num_contact))
 }
-# TODO do without tidyeval and without deprecated code
 
 add_country_population <- function(df) {
     df %>% 
@@ -29,4 +26,8 @@ keep_cities_for_coverage <- function(df) {
             city_rank = min_rank(num_contact)
         ) %>%
         filter(contact_coverage <= 0.8 | city_rank == 1)
+}
+
+countMissingByColumns <- function(home_cities) {
+    apply(home_cities, 2, function(x) sum(is.na(x)) )
 }
