@@ -35,33 +35,14 @@ home_cities %>%
     group_by(missing_city = is.na(city)) %>% 
     summarize(n_city = n(), avg_num_coord = mean(n_coord))
 
-relevant_cities <- home_cities %>% 
+home_cities %>% 
+    filter_missing_city() %>% 
     summarize_population_by_region(country_code, city, long, lat) %>% 
-    filter(num_contact >= 10000) %>% 
-    filter_missing_city()
-
-map_scatter_layout <- list(
-    showframe = FALSE,
-    showland = TRUE,
-    resolution = 50,
-    showcountries = TRUE,
-    projection = list(type = 'Mercator'),
-    landcolor = toRGB("gray80"),
-    countrycolor = toRGB("white"),
-    showcoastlines = TRUE,
-    coastlinecolor = toRGB("white"),
-    countrywidth = 0.5
-)
-
-plot_geo(relevant_cities, lat = ~lat, lon = ~long) %>%
+    filter(num_contact >= 1000) %>% 
+    plot_geo(lat = ~lat, lon = ~long) %>%
     add_markers(
-        text = ~num_contact,
-        color = ~log(num_contact),
-        hoverinfo = "text"
-    ) %>%
-    colorbar(title = "Number of contacts") %>%
-    layout(
-        title = 'Relevant cities by contact nums', geo = map_scatter_layout
+        text = ~str_c(country_code, city, num_contact, sep = "<br />"),
+        size = ~log(num_contact)
     )
 
 
