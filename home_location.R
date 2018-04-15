@@ -20,13 +20,12 @@ home_cities %>%
         num_country = n_distinct(country_code)
     )
 
-glimpseExtremeRegions(home_cities, country_code, city) %>% 
-    inner_join(countries, by = "country_code")
-glimpseExtremeRegions(home_cities, country_code) %>% 
-    inner_join(countries, by = "country_code")
+use_country_names <- purrr::partial(use_country_names_from, countries = countries)
 
-# for the purpose of comparing coutries we do not want to fully filter empty
-# city information
+glimpse_extreme_regions(home_cities, country_code, city) %>% 
+    use_country_names()
+glimpse_extreme_regions(home_cities, country_code) %>% 
+    use_country_names()
 
 # TODO plot each city on worldmap
 # TODO plot country populations on worldmap

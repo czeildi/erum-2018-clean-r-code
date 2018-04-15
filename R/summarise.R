@@ -1,18 +1,19 @@
-glimpseExtremeRegions <- function(home_cities, ...) {
-    top <- summarize_population_by_region(home_cities, ...) %>% 
-        arrange(desc(num_contact)) %>%
-        head(5)
+glimpse_extreme_regions <- function(home_cities, ...) {
+    arranged_regions <- home_cities %>% 
+        summarize_population_by_region(...) %>% 
+        arrange(desc(num_contact))
     
-    bottom <- summarize_population_by_region(home_cities, ...) %>% 
-        arrange(num_contact) %>%
-        head(5)
-    rbind(top, bottom)
+    rbind(
+        head(arranged_regions, 5),
+        tail(arranged_regions, 5)
+    )
 }
 
 summarize_population_by_region <- function(df, ...) {
     df %>% 
         group_by(...) %>% 
-        summarize(num_contact = sum(num_contact))
+        summarize(num_contact = sum(num_contact)) %>%
+        ungroup()
 }
 
 add_country_population <- function(df) {
