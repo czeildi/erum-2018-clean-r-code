@@ -11,7 +11,11 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 countries[!complete.cases(countries), ]
 home_cities[!complete.cases(home_cities), ]
 
-apply(home_cities, 2, function(x) sum(is.na(x)) )
+# extract function keyboard shortcut
+countMissingByColumns <- function(home_cities) {
+    apply(home_cities, 2, function(x) sum(is.na(x)) )
+}
+countMissingByColumns(home_cities)
 
 home_cities %>%
     group_by(missing_city = is.na(city)) %>% 
