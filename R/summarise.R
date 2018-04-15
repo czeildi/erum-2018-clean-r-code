@@ -1,3 +1,14 @@
+glimpseExtremeRegions <- function(home_cities, ...) {
+    top <- summarize_population_by_region(home_cities, ...) %>% 
+        arrange(desc(num_contact)) %>%
+        head(5)
+    
+    bottom <- summarize_population_by_region(home_cities, ...) %>% 
+        arrange(num_contact) %>%
+        head(5)
+    rbind(top, bottom)
+}
+
 summarize_population_by_region <- function(df, ...) {
     df %>% 
         group_by(...) %>% 

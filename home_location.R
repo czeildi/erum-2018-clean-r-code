@@ -20,17 +20,8 @@ home_cities %>%
         num_country = n_distinct(country_code)
     )
 
-summarize_population_by_region(home_cities, country_code, city) %>% 
-    arrange(desc(num_contact))
-
-summarize_population_by_region(home_cities, country_code, city) %>% 
-    arrange(num_contact)
-
-summarize_population_by_region(home_cities, country_code) %>% 
-    arrange(desc(num_contact))
-
-summarize_population_by_region(home_cities, country_code) %>% 
-    arrange(num_contact)
+glimpseExtremeRegions(home_cities, country_code, city)
+glimpseExtremeRegions(home_cities, country_code)
 
 # for the purpose of comparing coutries we do not want to fully filter empty
 # city information
