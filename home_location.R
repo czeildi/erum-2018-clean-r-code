@@ -30,35 +30,21 @@ home_cities %>%
 
 home_cities %>% 
     summarize_population_by_region(country_code) %>% 
-    attach_country_metadata(countries) %>% 
-    plot_country_nums(col_name = "num_contact")
+    plot_country_nums(countries, col_name = "num_contact", num_scaler = log10)
 
 # capital city effect -----------------------------------------------------
 
-city_populations <- arrange_regions_by_population(home_cities, country_code, city)
-# legyen kulon rendezett es nem rendezett fuggveny
-share_of_strongest_city <- city_populations %>%
-    add_country_population() %>%
-    filter_small_countries() %>%
-    filter_missing_city() %>%
-    keep_strongest_city()
-    
-# itt is ki akarjuk szurni missing cityket?
-# first after 0.8 would make more sense
+relative_city_populations <- home_cities %>% 
+    summarize_population_by_region(country_code, city) %>% 
+    calculate_relative_city_populations()
 
-num_cities_for_coverage <- city_populations %>%
-    add_country_population() %>%
-    filter_small_countries() %>%
-    filter_missing_city() %>%
-    keep_cities_for_coverage() %>%
-    group_by(country_code) %>%
-    summarise(
-        country_population = mean(country_population),
-        num_city = n(),
-        coverage = max(contact_coverage)
-    )
+relative_city_populations %>% 
+    keep_strongest_city() %>% 
+    plot_country_nums(countries, "relative_population")
 
-# move group by + sumarise to function
+relative_city_populations %>%
+    count_cities_for_coverage(min_coverage = 0.8) %>% 
+    plot_country_nums(countries, "num_city", num_scaler = log10)
 
 # num countries by clients and industry comparison ------------------------------------------------
 

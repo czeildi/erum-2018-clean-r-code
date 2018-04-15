@@ -1,8 +1,9 @@
-plot_country_nums <- function(country_nums, col_name) {
+plot_country_nums <- function(country_nums, countries, col_name, num_scaler = identity) {
     country_nums %>% 
+        attach_country_metadata(countries) %>% 
         plot_geo(locations = ~iso3c) %>% 
         add_trace(
-            z = ~log10(get(col_name)), 
+            z = ~num_scaler(get(col_name)), 
             text = ~paste(country, prettyNum(get(col_name), big.mark = " "), sep = "<br />"),
             showscale = FALSE
         )
