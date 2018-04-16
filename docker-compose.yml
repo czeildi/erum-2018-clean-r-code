@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  project:
+    build: .
+    image: czeildi/erum-clean-r-code
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./data:/home/rstudio/erum-project/data
