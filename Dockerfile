@@ -1,4 +1,5 @@
 FROM rocker/tidyverse:3.4
+MAINTAINER Ildi Czeller <czeildi@gmail.com>
 
 RUN R -e "install.packages('plotly')"
 
