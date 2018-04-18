@@ -49,3 +49,7 @@ attach_country_metadata <- function(df, countries) {
 attach_client_metadata <- function(df, clients) {
     inner_join(df, clients, by = "client_id")
 }
+
+scale_x_rate <- function() {
+    scale_x_continuous(labels = scales::percent_format())
+}
