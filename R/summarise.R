@@ -5,6 +5,13 @@ calculate_relative_city_populations <- function(city_populations) {
         mutate(relative_population = num_contact / country_population)
 }
 
+calculate_relative_country_population <- function(country_populations_by_client) {
+    country_populations_by_client %>% 
+        group_by(client_id) %>% 
+        mutate(client_population = sum(num_contact)) %>% 
+        mutate(relative_population = num_contact / client_population)
+}
+
 glimpse_extreme_regions <- function(home_cities, countries, ...) {
     arranged_regions <- home_cities %>% 
         summarize_population(...) %>% 

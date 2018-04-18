@@ -12,23 +12,27 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 keep_rows_with_missing_values(countries)
 keep_rows_with_missing_values(home_cities)
 
+
 count_missing_by_column(home_cities)
 
 # TODO coord atlagolas miatt missing city info alapbol eleg fura...
 spread_of_missing_cities(home_cities)
 
+
 glimpse_extreme_regions(home_cities, countries, country_code, city)
 glimpse_extreme_regions(home_cities, countries, country_code)
 
+
 check_multiple_city_coords(home_cities)
+
 
 city_populations <- summarize_population(home_cities, country_code, city)
 country_populations <- summarize_population(home_cities, country_code)
 
+
 city_populations %>% 
     keep_relevant_cities(population_limit = 1000) %>% 
     plot_city_nums(countries, home_cities, col_name = "num_contact")
-
 
 plot_country_nums(
     country_populations, countries,
@@ -53,17 +57,15 @@ clients <- read_csv("data/clients.csv")
 
 relative_country_populations <- home_cities %>% 
     summarize_population(client_id, country_code) %>% 
-    group_by(client_id) %>% 
-    mutate(account_population = sum(num_contact)) %>% 
-    mutate(relative_population = num_contact / account_population)
+    calculate_relative_country_population()
 
 relative_country_populations %>% 
     keep_strongest_country() %>% 
     inner_join(clients, by = "client_id") %>% 
     ggplot(aes(x = relative_population, color = industry)) + 
     geom_density() + 
-    scale_x_continuous(labels = scales::percent_format()) + 
-    theme_bw()
+    theme_bw() + 
+    scale_x_continuous(labels = scales::percent_format())
 
 relative_country_populations %>% 
     group_by(client_id) %>% 
