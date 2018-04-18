@@ -22,11 +22,15 @@ plot_country_nums <- function(country_nums, countries, col_name, num_scaler = id
 }
 
 plot_industry_distributions <- function(client_metric, clients, metric) {
-    client_metric %>% 
+    p <- client_metric %>% 
         attach_client_metadata(clients) %>% 
         ggplot(aes_string(x = metric, color = "industry")) + 
         geom_density_without_breaks() + 
         theme_bw()
+    if (str_detect(metric, "relative")) {
+        p <- p + scale_x_rate()
+    }
+    p
 }
 
 attach_city_metadata <- function(df, countries, cities) {

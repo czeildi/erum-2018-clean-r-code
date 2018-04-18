@@ -61,8 +61,7 @@ relative_country_populations <- home_cities %>%
 
 relative_country_populations %>% 
     keep_strongest_country() %>% 
-    plot_industry_distributions(clients, "relative_population") + 
-    scale_x_rate()
+    plot_industry_distributions(clients, "relative_population")
 
 relative_country_populations %>% 
     count_countries() %>% 
