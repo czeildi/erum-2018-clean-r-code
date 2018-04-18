@@ -37,3 +37,7 @@ get_city_coords <- function(cities) {
 attach_country_metadata <- function(df, countries) {
     inner_join(df, countries, by = "country_code")
 }
+
+attach_client_metadata <- function(df, clients) {
+    inner_join(df, clients, by = "client_id")
+}

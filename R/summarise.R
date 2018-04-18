@@ -101,3 +101,9 @@ spread_of_missing_cities <- function(home_cities) {
             num_country = n_distinct(country_code)
         )
 }
+
+count_countries <- function(df) {
+    df %>% 
+        group_by(client_id) %>% 
+        summarize(num_country = n())
+}

@@ -61,16 +61,15 @@ relative_country_populations <- home_cities %>%
 
 relative_country_populations %>% 
     keep_strongest_country() %>% 
-    inner_join(clients, by = "client_id") %>% 
+    attach_client_metadata(clients) %>% 
     ggplot(aes(x = relative_population, color = industry)) + 
     geom_density() + 
     theme_bw() + 
     scale_x_continuous(labels = scales::percent_format())
 
 relative_country_populations %>% 
-    group_by(client_id) %>% 
-    summarize(num_country = n()) %>% 
-    inner_join(clients, by = "client_id") %>% 
+    count_countries() %>% 
+    attach_client_metadata(clients) %>% 
     ggplot(aes(x = num_country, color = industry)) + 
     geom_density() + 
     theme_bw()
