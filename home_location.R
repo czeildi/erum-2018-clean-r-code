@@ -61,18 +61,12 @@ relative_country_populations <- home_cities %>%
 
 relative_country_populations %>% 
     keep_strongest_country() %>% 
-    attach_client_metadata(clients) %>% 
-    ggplot(aes(x = relative_population, color = industry)) + 
-    geom_density() + 
-    theme_bw() + 
+    plot_industry_distributions(clients, "relative_population") + 
     scale_x_continuous(labels = scales::percent_format())
 
 relative_country_populations %>% 
     count_countries() %>% 
-    attach_client_metadata(clients) %>% 
-    ggplot(aes(x = num_country, color = industry)) + 
-    geom_density() + 
-    theme_bw()
+    plot_industry_distributions(clients, "num_country")
 
 # industry comparison in regions ------------------------------------------
 
