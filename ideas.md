@@ -1,4 +1,4 @@
-## Megbeszeles 03. 01.
+egészen kevés dologra nézzünk meg sok kulonbozo megoldast, es hogy melyiket hogyan lehet improvolni?
 
 struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktorálás megbeszélés, adott refaktorálásról pici "elméleti"  háttér, esetleg refaktorálásnál megbeszélni a résztvevők által adott megoldásokat, hogy mi benne a jó, hogy lehetne mágjobb
 
@@ -6,46 +6,54 @@ struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktor
 
 közepén legyen 30 perces szünet
 
-### infrastruktúra
-
-- GCP-n felhúzunk mindenkinek dockerben egy rstudio servert előre telepített csomagokkal, kiinduló scripttel
-- dropboxon keresztül időnként újabb és újabb hintek, code snippetek, megoldások?
-- [rstudio cloud?](https://rstudio.cloud/)
-
 Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
 
-- végig rmarkdown?
+- [ ] végig rmarkdown?
 - elején függvény, elnevezés
-  - nem kell 3x ismétlődés, hogy érdemes legyen valamit függvénybe kiemelni
 - legvége parametrized rmarkdown: egyes ügyfeleknek akarunk bizonyos időszakra reportot küldeni
-
-keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
-
-====================
-
-04. 12
-
-fuggvenyek ott maradjanak ugyanabban a fajlban?
-
-2 elemzesunk van --> elson tanulsz, masodikon gyakorolsz
-
-3 fo lepes: adatbeolvasas, summarise, plot
-
-mukodo kodot kapjanak
-
-------------------------------------------------
-
-## Meta
-
+- [ ] keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
+  - send code to console
+  - rename variable in scope
+  - extract function
+  - new R script
+  - go to file/ function
+  - reindent lines
+  - insert pipe / insert assignment
+  - move lines up / down
+  - restart R
+  - go to function / file (F2)
+- fuggvenyek ott maradjanak ugyanabban a fajlban? nem, rögtön kerüljenek ki külön fájlba
+- 2 elemzesunk van --> elson tanulsz, masodikon gyakorolsz
+- 3 fo lepes: adatbeolvasas, summarise, plot
+- mukodo kodot kapjanak
 - make changes in parallel to two versions: one clean and not so clean
+- dropboxon keresztül időnként újabb és újabb hintek, code snippetek, megoldások?
+
+kiemelhetjuk, hogy package, production rendszer esetén más elvek (is) lesznek, pl input checking, error handling, unit testing etc
+
+minden elvhez tartoznak smellek: altalaban könnyebb felismerni, ha valami nem jó, nem teljesít egy elvet, mint hogy minden tökéletes (ami amúgy is ritka)
 
 ## Principles
 
-- self contained results (do not depend on specific order to run), you can run the same piece twice
-- all parameters are passed to function
+- single responsibility, do one thing: smell, ha kulonbozo szintu absztrakciok vannak
+- nem kell 3x ismétlődés, hogy érdemes legyen valamit függvénybe kiemelni
+- self contained results (do not depend on specific order to run) - you can run the same piece twice: do not reassign change result to same variable, it also supports being able to check intermediate variables
+- all parameters are passed to function (or very explicitly labeled as global variable?)
 - each "business" logic is defined at exactly one place
-- könyvként olvasható
+- könyvként olvasható, ha nem muszáj, nem vagy részletekkel terhelve
 - egy függvényeket tartalmazó fájlban elején legfontosabb, segédfüggvények lentebb
+- nem kell refaktorálást se túlzásba vinni, de boy scout rule, ha valamit amúgy is módosítasz, gondold át a refaltor lehetőségeket
+- a kód magas szinten R-t nem ismerők számára is legyen érthető: pl dplyr::filter-t mondjuk nem kell függvénybe kiemelni, de egy apply(dt, 2, fun) azt már talán inkább
+- explain in code better than comment
+- eloszor mukodjon, utana refaktor
+- egy fuggvenynek ne legyen sok parametere, egyutt mozgo parametereket be lehet közös listaba tenni
+- named constants instead of magic numbers
+- ne legyenek alig kulonbozo nevek, pl egyes szam, tobbes szam, input1, input2 stb
+- clearly separate functions with side effects and function which return a value
+
+### infrastruktúra
+
+- digital Ocean, 1 docker image / user
 
 ------------------------------------------------------------------------------
 
