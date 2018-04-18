@@ -50,6 +50,7 @@ minden elvhez tartoznak smellek: altalaban könnyebb felismerni, ha valami nem j
 - named constants instead of magic numbers
 - ne legyenek alig kulonbozo nevek, pl egyes szam, tobbes szam, input1, input2 stb
 - clearly separate functions with side effects and function which return a value
+- valtozo elnevezes data frame oszlopnevekre is vonatkozik!
 
 ### infrastruktúra
 
