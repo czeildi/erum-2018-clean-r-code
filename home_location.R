@@ -9,12 +9,12 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
 # initial exploration -----------------------------------------------------
 
-countries[!complete.cases(countries), ]
-home_cities[!complete.cases(home_cities), ]
+keep_rows_with_missing_values(countries)
+keep_rows_with_missing_values(home_cities)
 
 count_missing_by_column(home_cities)
 
-# coord atlagolas miatt missing city info alapbol eleg fura...
+# TODO coord atlagolas miatt missing city info alapbol eleg fura...
 spread_of_missing_cities(home_cities)
 
 glimpse_extreme_regions(home_cities, countries, country_code, city)
@@ -25,8 +25,7 @@ check_multiple_city_coords(home_cities)
 home_cities %>% 
     summarize_population(country_code, city) %>% 
     keep_relevant_cities(population_limit = 1000) %>% 
-    attach_city_metadata(countries, home_cities) %>% 
-    plot_city_nums(col_name = "num_contact")
+    plot_city_nums(countries, home_cities, col_name = "num_contact")
 
 home_cities %>% 
     summarize_population(country_code) %>% 
@@ -49,7 +48,7 @@ relative_city_populations %>%
 
 
 
-# num countries by clients and industry comparison ------------------------------------------------
+# num countries by clients and industry comparison ---------------------------
 clients <- read_csv("data/clients.csv")
 
 relative_country_populations <- home_cities %>% 

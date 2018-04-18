@@ -1,3 +1,15 @@
+plot_city_nums <- function(city_nums, countries, cities, col_name) {
+    city_nums %>% 
+        attach_city_metadata(countries, cities) %>% 
+        plot_geo(lat = ~lat, lon = ~long) %>%
+        add_markers(
+            size = ~log10(get(col_name)),
+            color = ~log10(get(col_name)),
+            text = ~str_c(country, city, get(col_name), sep = "<br />")
+        ) %>% 
+        colorbar(title = col_name, tickprefix = "10^")
+}
+
 plot_country_nums <- function(country_nums, countries, col_name, num_scaler = identity) {
     country_nums %>% 
         attach_country_metadata(countries) %>% 
@@ -7,17 +19,6 @@ plot_country_nums <- function(country_nums, countries, col_name, num_scaler = id
             text = ~paste(country, prettyNum(get(col_name), big.mark = " "), sep = "<br />"),
             showscale = FALSE
         )
-}
-
-plot_city_nums <- function(city_nums, col_name) {
-    city_nums %>% 
-        plot_geo(lat = ~lat, lon = ~long) %>%
-        add_markers(
-            size = ~log10(get(col_name)),
-            color = ~log10(get(col_name)),
-            text = ~str_c(country, city, get(col_name), sep = "<br />")
-        ) %>% 
-        colorbar(title = col_name, tickprefix = "10^")
 }
 
 attach_city_metadata <- function(df, countries, cities) {
