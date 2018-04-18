@@ -25,7 +25,7 @@ plot_industry_distributions <- function(client_metric, clients, metric) {
     client_metric %>% 
         attach_client_metadata(clients) %>% 
         ggplot(aes_string(x = metric, color = "industry")) + 
-        geom_density() + 
+        geom_density_without_breaks() + 
         theme_bw()
 }
 
@@ -52,4 +52,11 @@ attach_client_metadata <- function(df, clients) {
 
 scale_x_rate <- function() {
     scale_x_continuous(labels = scales::percent_format())
+}
+
+geom_density_without_breaks <- function() {
+    list(
+        geom_density(),
+        scale_y_continuous(breaks = NULL)
+    )
 }
