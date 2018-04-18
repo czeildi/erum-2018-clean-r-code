@@ -54,6 +54,7 @@ relative_city_populations %>%
 
 # num countries by clients and industry comparison ---------------------------
 clients <- read_csv("data/clients.csv")
+keep_rows_with_missing_values(clients)
 
 relative_country_populations <- home_cities %>% 
     summarize_population(client_id, country_code) %>% 
@@ -70,7 +71,7 @@ relative_country_populations %>%
 # industry comparison in regions ------------------------------------------
 
 home_cities %>% 
-    inner_join(clients, by = "client_id") %>% 
+    attach_client_metadata(clients) %>% 
     summarize_population(industry, country_code) %>% 
     add_country_population() %>% 
     mutate(share_of_industry = num_contact / country_population) %>% 
