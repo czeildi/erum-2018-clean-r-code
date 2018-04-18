@@ -22,20 +22,23 @@ glimpse_extreme_regions(home_cities, countries, country_code)
 
 check_multiple_city_coords(home_cities)
 
-home_cities %>% 
-    summarize_population(country_code, city) %>% 
+city_populations <- summarize_population(home_cities, country_code, city)
+country_populations <- summarize_population(home_cities, country_code)
+
+city_populations %>% 
     keep_relevant_cities(population_limit = 1000) %>% 
     plot_city_nums(countries, home_cities, col_name = "num_contact")
 
-home_cities %>% 
-    summarize_population(country_code) %>% 
-    plot_country_nums(countries, col_name = "num_contact", num_scaler = log10)
+
+plot_country_nums(
+    country_populations, countries,
+    col_name = "num_contact",
+    num_scaler = log10
+)
 
 # capital city effect -----------------------------------------------------
 
-relative_city_populations <- home_cities %>% 
-    summarize_population(country_code, city) %>% 
-    calculate_relative_city_populations()
+relative_city_populations <- calculate_relative_city_populations(city_populations)
 
 relative_city_populations %>% 
     keep_strongest_city() %>% 
@@ -44,9 +47,6 @@ relative_city_populations %>%
 relative_city_populations %>%
     count_cities_for_coverage(min_coverage = 0.8) %>% 
     plot_country_nums(countries, "num_city", num_scaler = log10)
-
-
-
 
 # num countries by clients and industry comparison ---------------------------
 clients <- read_csv("data/clients.csv")
