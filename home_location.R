@@ -15,6 +15,7 @@ keep_rows_with_missing_values(home_cities)
 
 count_missing_by_column(home_cities)
 
+# TODO remove missign city from data to keep focus
 # TODO coord atlagolas miatt missing city info alapbol eleg fura...
 spread_of_missing_cities(home_cities)
 
@@ -24,6 +25,9 @@ glimpse_extreme_regions(home_cities, countries, country_code)
 
 
 check_multiple_city_coords(home_cities)
+
+# explore -----------------------------------------------------------------
+
 
 
 city_populations <- summarize_population(home_cities, country_code, city)

@@ -1,10 +1,22 @@
 egészen kevés dologra nézzünk meg sok kulonbozo megoldast, es hogy melyiket hogyan lehet improvolni?
 
+lesz internet?
+
+batoritsuk parmunkat
+
+gist-ben kodreszlet, amit be kell huzniuk, irunk hozza kodot?
+kulonbozo brancheken legyenek a lepesek, es legyen R fuggveny arra, hogy git checkout 
+<adott step>
+
+elemzesi cel szerint bontsunk
+
+globális változó: ha nem módosítjuk, csak read only, akkor érvényes?
+
 struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktorálás megbeszélés, adott refaktorálásról pici "elméleti"  háttér, esetleg refaktorálásnál megbeszélni a résztvevők által adott megoldásokat, hogy mi benne a jó, hogy lehetne mágjobb
 
 4-5 30 perces modul fér bele
 
-közepén legyen 30 perces szünet
+közepén legyen 15 perces szünet
 
 Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
 
@@ -34,6 +46,8 @@ kiemelhetjuk, hogy package, production rendszer esetén más elvek (is) lesznek,
 minden elvhez tartoznak smellek: altalaban könnyebb felismerni, ha valami nem jó, nem teljesít egy elvet, mint hogy minden tökéletes (ami amúgy is ritka)
 
 ## Principles
+
+ezekbol keves slide, esetleg cheatsheet?
 
 - single responsibility, do one thing: smell, ha kulonbozo szintu absztrakciok vannak
 - nem kell 3x ismétlődés, hogy érdemes legyen valamit függvénybe kiemelni
