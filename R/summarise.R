@@ -1,7 +1,6 @@
 calculate_relative_city_populations <- function(city_populations) {
     city_populations %>% 
         add_country_population() %>% 
-        filter_missing_city() %>% 
         mutate(relative_population = num_contact / country_population)
 }
 
@@ -87,19 +86,6 @@ smallest_coverage_above_limit <- function(coverages, min_coverage) {
         mutate(city_rank = min_rank(contact_coverage)) %>% 
         filter(city_rank == 1) %>% 
         select(country_code, coverage_limit = contact_coverage)
-}
-
-count_missing_by_column <- function(home_cities) {
-    apply(home_cities, 2, function(x) sum(is.na(x)) )
-}
-
-spread_of_missing_cities <- function(home_cities) {
-    home_cities %>%
-        group_by(missing_city = is.na(city)) %>% 
-        summarize(
-            num_contact = sum(num_contact),
-            num_country = n_distinct(country_code)
-        )
 }
 
 count_countries <- function(df) {
