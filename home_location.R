@@ -1,16 +1,14 @@
 library("tidyverse")
 library("plotly")
 
+source("R/clean.R")
+
 # load data ---------------------------------------------------------------
 
 countries <- read_csv("data/countries.csv", na = "")
 home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
 # data preparation -----------------------------------------------------
-
-show_rows_with_missing_value <- function(df) {
-    df[!complete.cases(df), ]
-}
 
 show_rows_with_missing_value(countries)
 show_rows_with_missing_value(home_cities)
