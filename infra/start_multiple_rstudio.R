@@ -5,7 +5,7 @@ for (user_index in 1:container_num) {
   cmd <- paste0(
       "docker run -d -p ", port_start + user_index, ":8787",
       " --memory 1g --cpu-shares 5",
-      " -v /home/rstudio/data:/home/rstudio/erum-project/data:ro",
+      " -v /home/rstudio/data:/home/rstudio/erum-2018-clean-r-code/data:ro",
       " czeildi/erum-clean-r-code"
   )
   print(cmd)

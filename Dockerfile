@@ -3,10 +3,8 @@ MAINTAINER Ildi Czeller <czeildi@gmail.com>
 
 RUN R -e "install.packages('plotly')"
 
-RUN mkdir -p /home/rstudio/erum-project
+WORKDIR /home/rstudio
 
-COPY erum-2018-clean-r-code.Rproj /home/rstudio/erum-project/erum-2018-clean-r-code.Rproj
-COPY home_location.R /home/rstudio/erum-project
-COPY R /home/rstudio/erum-project/R
+RUN git clone https://github.com/czeildi/erum-2018-clean-r-code.git
 
-RUN chown -R rstudio:rstudio /home/rstudio/erum-project
+RUN chown -R rstudio:rstudio /home/rstudio/erum-2018-clean-r-code

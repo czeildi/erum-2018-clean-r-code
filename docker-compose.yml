@@ -7,4 +7,4 @@ services:
     ports:
       - "8787:8787"
     volumes:
-      - ./data:/home/rstudio/erum-project/data:ro
+      - ./data:/home/rstudio/erum-2018-clean-r-code/data:ro
