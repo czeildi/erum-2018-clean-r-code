@@ -10,10 +10,13 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
 # data preparation -----------------------------------------------------
 
-show_rows_with_missing_value(countries)
-show_rows_with_missing_value(home_cities)
+countries[!complete.cases(countries), ]
+home_cities[!complete.cases(home_cities), ]
 
-show_cities_with_multiple_coords(home_cities)
+home_cities %>% 
+    group_by(country_code, city) %>% 
+    summarize(num_coord_per_city = n_distinct(long, lat)) %>% 
+    filter(num_coord_per_city > 1)
 
 # data exploration --------------------------------------------------------
 
