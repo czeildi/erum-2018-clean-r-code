@@ -8,8 +8,12 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
 # data preparation -----------------------------------------------------
 
-countries[!complete.cases(countries), ]
-home_cities[!complete.cases(home_cities), ]
+show_rows_with_missing_value <- function(df) {
+    df[!complete.cases(df), ]
+}
+
+show_rows_with_missing_value(countries)
+show_rows_with_missing_value(home_cities)
 
 home_cities %>% 
     group_by(country_code, city) %>% 
