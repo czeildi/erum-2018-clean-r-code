@@ -13,10 +13,7 @@ home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 show_rows_with_missing_value(countries)
 show_rows_with_missing_value(home_cities)
 
-home_cities %>% 
-    group_by(country_code, city) %>% 
-    summarize(num_coord_per_city = n_distinct(long, lat)) %>% 
-    filter(num_coord_per_city > 1)
+show_cities_with_multiple_coords(home_cities)
 
 # data exploration --------------------------------------------------------
 
