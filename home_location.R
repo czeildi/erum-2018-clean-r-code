@@ -8,11 +8,13 @@ purrr::walk(list.files("R", full.names = TRUE), source)
 # NA is valid country code, stands for Namibia, so should not be read as NA
 countries <- read_csv("data/countries.csv", na = "")
 home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
+clients <- read_csv("data/clients.csv")
 
 # data preparation -----------------------------------------------------
 
 get_rows_with_missing_value(countries)
 get_rows_with_missing_value(home_cities)
+get_rows_with_missing_value(clients)
 
 get_cities_with_multiple_coords(home_cities)
 
@@ -38,9 +40,6 @@ home_cities %>%
   plot_population_share(countries)
 
 # industry comparison based on spread of clients --------------------------
-
-clients <- read_csv("data/clients.csv")
-get_rows_with_missing_value(clients)
 
 home_cities %>% 
   count_countries_by_client() %>% 

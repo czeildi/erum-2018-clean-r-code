@@ -20,24 +20,25 @@ plot_country_populations <- function(country_populations, countries) {
 }
 
 plot_population_share <- function(top_city_population_share, countries) {
-  top_city_population_share %>% 
-    base_country_plot(countries) %>% 
-    add_trace(
-      z = ~population_share, 
-      text = ~paste(country, country_population, scales::percent(population_share), sep = "<br />")
-    ) %>% 
-    share_colorbar()
+  plot_country_shares(
+    top_city_population_share, metric_name = "population_share", countries
+  )
 }
 
 plot_ecommerce_share <- function(ecommerce_share, countries) {
   ecommerce_share %>% 
+    plot_country_shares(metric_name = "share_of_industry", countries) %>% 
+    layout(title = "Share of eCommerce")
+}
+
+plot_country_shares <- function(country_shares, metric_name, countries) {
+  country_shares %>% 
     base_country_plot(countries) %>% 
     add_trace(
-      z = ~share_of_industry,
-      text = ~paste(country, country_population, scales::percent(share_of_industry), sep = "<br />")
-    ) %>%
-    share_colorbar() %>% 
-    layout(title = "Share of eCommerce")
+      z = ~get(metric_name), 
+      text = ~paste(country, country_population, scales::percent(get(metric_name)), sep = "<br />")
+    ) %>% 
+    share_colorbar()
 }
 
 plot_country_num_distribution_by_industry <- function(country_nums, clients) {
