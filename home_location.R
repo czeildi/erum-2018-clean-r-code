@@ -43,10 +43,5 @@ clients <- read_csv("data/clients.csv")
 get_rows_with_missing_value(clients)
 
 home_cities %>% 
-  group_by(client_id) %>%
-  summarize(num_country = n_distinct(country_code)) %>% 
-  inner_join(clients, by = "client_id") %>% 
-  ggplot(aes(x = num_country, color = industry)) + 
-  geom_density() + 
-  theme_bw() + 
-  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+  count_countries_by_client() %>% 
+  plot_country_num_distribution_by_industry(clients)

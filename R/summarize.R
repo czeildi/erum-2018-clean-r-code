@@ -26,3 +26,9 @@ summarize_population <- function(home_cities, ...) {
     summarize(num_contact = sum(num_contact)) %>%
     ungroup()
 }
+
+count_countries_by_client <- function(home_cities) {
+  home_cities %>% 
+    group_by(client_id) %>%
+    summarize(num_country = n_distinct(country_code))
+}

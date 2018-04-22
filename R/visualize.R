@@ -28,6 +28,13 @@ plot_population_share <- function(top_city_population_share, countries) {
     )
 }
 
+plot_country_num_distribution_by_industry <- function(country_nums, clients) {
+  country_nums %>% 
+    attach_client_metadata(clients) %>% 
+    ggplot(aes(x = num_country, color = industry)) + 
+    geom_density_clean()
+}
+
 base_country_plot <- function(df, countries) {
   df %>% 
     attach_country_metadata(countries) %>%
@@ -36,6 +43,13 @@ base_country_plot <- function(df, countries) {
 
 log_population_colorbar <- function(p) {
   colorbar(p, title = "Population", tickprefix = "10^")
+}
+
+geom_density_clean <- function() {
+  list(
+    geom_density(),
+    theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+  )
 }
 
 attach_human_readable_country_metadata <- function(df, countries) {
@@ -48,3 +62,6 @@ attach_country_metadata <- function(df, countries) {
   inner_join(df, countries, by = "country_code")
 }
 
+attach_client_metadata <- function(df, clients) {
+  inner_join(df, clients, by = "client_id")
+}
