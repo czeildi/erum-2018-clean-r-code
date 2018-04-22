@@ -45,3 +45,19 @@ get_rows_with_missing_value(clients)
 home_cities %>% 
   count_countries_by_client() %>% 
   plot_country_num_distribution_by_industry(clients)
+
+# eCommerce dominance by country ------------------------------------------
+
+home_cities %>% 
+  attach_client_metadata(clients) %>% 
+  summarize_population(industry, country_code) %>% 
+  add_country_population() %>% 
+  filter(industry == 'eCommerce') %>% 
+  mutate(share_of_industry = num_contact / country_population) %>% 
+  base_country_plot(countries) %>% 
+  add_trace(
+    z = ~share_of_industry, 
+    text = ~paste(country, country_population, scales::percent(share_of_industry), sep = "<br />")
+  ) %>% 
+  colorbar(title = "", limits = c(0, 1)) %>% 
+  layout(title = "Share of eCommerce")
