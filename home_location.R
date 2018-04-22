@@ -1,12 +1,11 @@
 library("tidyverse")
-library("plotly")
 
 # load data ---------------------------------------------------------------
 
 countries <- read_csv("data/countries.csv", na = "")
 home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
-# data preparation -----------------------------------------------------
+# data preparation -------------------------------------------------------
 
 countries[!complete.cases(countries), ]
 home_cities[!complete.cases(home_cities), ]
