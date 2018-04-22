@@ -32,20 +32,21 @@ home_cities %>%
 
 # capital city effect -----------------------------------------------------
 
-population_share_of_strongest_city_in_country <- home_cities %>% 
+home_cities %>% 
   summarize_population(country_code, city) %>%
-  group_by(country_code) %>%
-  mutate(country_population = sum(num_contact)) %>%
-  mutate(city_rank_in_country = min_rank(desc(num_contact))) %>%
-  ungroup() %>%
-  filter(city_rank_in_country == 1) %>%
-  mutate(population_share = num_contact / country_population)
+  get_population_share_of_top_cities() %>%
+  plot_population_share(countries)
 
-population_share_of_strongest_city_in_country %>%
-  attach_country_metadata(countries) %>%
-  plot_geo(locations = ~iso3c) %>% 
-  add_trace(
-    z = ~population_share, 
-    text = ~paste(country, country_population, scales::percent(population_share), sep = "<br />")
-  )
-  
+# industry comparison based on spread of clients --------------------------
+
+clients <- read_csv("data/clients.csv")
+get_rows_with_missing_value(clients)
+
+home_cities %>% 
+  group_by(client_id) %>%
+  summarize(num_country = n_distinct(country_code)) %>% 
+  inner_join(clients, by = "client_id") %>% 
+  ggplot(aes(x = num_country, color = industry)) + 
+  geom_density() + 
+  theme_bw() + 
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())

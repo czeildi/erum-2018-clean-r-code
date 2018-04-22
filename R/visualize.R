@@ -11,13 +11,27 @@ plot_city_populations <- function(city_populations) {
 
 plot_country_populations <- function(country_populations, countries) {
   country_populations %>% 
-    attach_country_metadata(countries) %>%
-    plot_geo(locations = ~iso3c) %>% 
+    base_country_plot(countries) %>% 
     add_trace(
       z = ~log10(num_contact), 
       text = ~paste(country, prettyNum(num_contact, big.mark = " "), sep = "<br />")
     ) %>%
     log_population_colorbar()
+}
+
+plot_population_share <- function(top_city_population_share, countries) {
+  top_city_population_share %>% 
+    base_country_plot(countries) %>% 
+    add_trace(
+      z = ~population_share, 
+      text = ~paste(country, country_population, scales::percent(population_share), sep = "<br />")
+    )
+}
+
+base_country_plot <- function(df, countries) {
+  df %>% 
+    attach_country_metadata(countries) %>%
+    plot_geo(locations = ~iso3c)
 }
 
 log_population_colorbar <- function(p) {
