@@ -2,6 +2,7 @@ library("tidyverse")
 
 # load data ---------------------------------------------------------------
 
+# NA is valid country code, stands for Namibia, so should not be read as NA
 countries <- read_csv("data/countries.csv", na = "")
 home_cities <- read_csv("data/home_cities_frequent.csv.gz", na = "")
 
