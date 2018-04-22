@@ -1,45 +1,16 @@
-egészen kevés dologra nézzünk meg sok kulonbozo megoldast, es hogy melyiket hogyan lehet improvolni?
+structure:
+- principles
+- refactor
+- used principles again
 
-lesz internet?
+blocks:
+- we describe task and look at naive code
+- they refactor in pairs
+- we perform the refactor and explain our decisions and used keyboard shorcuts as well
+
+legyen parameterkent atadott fuggveny?
 
 batoritsuk parmunkat
-
-gist-ben kodreszlet, amit be kell huzniuk, irunk hozza kodot?
-kulonbozo brancheken legyenek a lepesek, es legyen R fuggveny arra, hogy git checkout 
-<adott step>
-
-elemzesi cel szerint bontsunk
-
-globális változó: ha nem módosítjuk, csak read only, akkor érvényes?
-
-struktúra: feladat, önálló munka, refaktor tippek, önálló munka, refaktorálás megbeszélés, adott refaktorálásról pici "elméleti"  háttér, esetleg refaktorálásnál megbeszélni a résztvevők által adott megoldásokat, hogy mi benne a jó, hogy lehetne mágjobb
-
-4-5 30 perces modul fér bele
-
-közepén legyen 15 perces szünet
-
-Az fontos, hogy ha valaki egy adott lépésnél lemarad, utána még tudja folytatni
-
-- [ ] végig rmarkdown?
-- elején függvény, elnevezés
-- legvége parametrized rmarkdown: egyes ügyfeleknek akarunk bizonyos időszakra reportot küldeni
-- [ ] keyboard shortcutok közben végig, minden résznél 2-3ra fókuszálunk?
-  - send code to console
-  - rename variable in scope
-  - extract function
-  - new R script
-  - go to file/ function
-  - reindent lines
-  - insert pipe / insert assignment
-  - move lines up / down
-  - restart R
-  - go to function / file (F2)
-- fuggvenyek ott maradjanak ugyanabban a fajlban? nem, rögtön kerüljenek ki külön fájlba
-- 2 elemzesunk van --> elson tanulsz, masodikon gyakorolsz
-- 3 fo lepes: adatbeolvasas, summarise, plot
-- mukodo kodot kapjanak
-- make changes in parallel to two versions: one clean and not so clean
-- dropboxon keresztül időnként újabb és újabb hintek, code snippetek, megoldások?
 
 kiemelhetjuk, hogy package, production rendszer esetén más elvek (is) lesznek, pl input checking, error handling, unit testing etc
 
@@ -65,6 +36,11 @@ ezekbol keves slide, esetleg cheatsheet?
 - ne legyenek alig kulonbozo nevek, pl egyes szam, tobbes szam, input1, input2 stb
 - clearly separate functions with side effects and function which return a value
 - valtozo elnevezes data frame oszlopnevekre is vonatkozik!
+- olyan neveket valasszunk, ami nem utkozik keyworddel, base fuggvennyel
+- ugyanarra a tevekenysegre ne legyen ket kulon ige
+- coords vs coordinates: legyen kiejtheto,felolvashato
+- joinnak tobb szerepe is lehet: szures, vagy uj oszlop behozasa —> egyetlen sort is erdemes fuggvenybe kiemelni, hogy mutassuk a célt
+
 
 ### infrastruktúra
 
