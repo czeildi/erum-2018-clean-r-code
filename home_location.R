@@ -1,7 +1,7 @@
 library("tidyverse")
 library("plotly")
 
-source("R/clean.R")
+purrr::walk(list.files("R", full.names = TRUE), source)
 
 # load data ---------------------------------------------------------------
 
