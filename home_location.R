@@ -32,7 +32,7 @@ home_cities %>%
 
 # capital city effect -----------------------------------------------------
 
-population_share_of_strongest_city_in_country <- home_cities %>% 
+population_share_of_top_city_in_country <- home_cities %>% 
   summarize_population(country_code, city) %>%
   group_by(country_code) %>%
   mutate(country_population = sum(num_contact)) %>%
@@ -41,7 +41,7 @@ population_share_of_strongest_city_in_country <- home_cities %>%
   filter(city_rank_in_country == 1) %>%
   mutate(population_share = num_contact / country_population)
 
-population_share_of_strongest_city_in_country %>%
+population_share_of_top_city_in_country %>%
   attach_country_metadata(countries) %>%
   plot_geo(locations = ~iso3c) %>% 
   add_trace(
