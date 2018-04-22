@@ -48,5 +48,4 @@ home_cities %>%
   inner_join(clients, by = "client_id") %>% 
   ggplot(aes(x = num_country, color = industry)) + 
   geom_density() + 
-  theme_bw() + 
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
