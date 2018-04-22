@@ -5,6 +5,14 @@ get_population_share_of_top_cities <- function(city_populations) {
     mutate(population_share = num_contact / country_population)
 }
 
+get_population_share_of_industry <- function(industry_populations,
+                                             selected_industry = "eCommerce") {
+  industry_populations %>% 
+    add_country_population() %>% 
+    filter(industry == selected_industry) %>% 
+    mutate(share_of_industry = num_contact / country_population)
+}
+
 add_country_population <- function(df) {
   df %>% 
     group_by(country_code) %>% 
@@ -25,6 +33,12 @@ summarize_population <- function(home_cities, ...) {
     group_by(...) %>% 
     summarize(num_contact = sum(num_contact)) %>%
     ungroup()
+}
+
+summarize_industry_population_by_country <- function(home_cities, clients) {
+  home_cities %>% 
+    attach_client_metadata(clients) %>% 
+    summarize_population(industry, country_code)
 }
 
 count_countries_by_client <- function(home_cities) {

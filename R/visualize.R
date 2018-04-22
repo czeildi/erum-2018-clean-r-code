@@ -25,7 +25,19 @@ plot_population_share <- function(top_city_population_share, countries) {
     add_trace(
       z = ~population_share, 
       text = ~paste(country, country_population, scales::percent(population_share), sep = "<br />")
-    )
+    ) %>% 
+    share_colorbar()
+}
+
+plot_ecommerce_share <- function(ecommerce_share, countries) {
+  ecommerce_share %>% 
+    base_country_plot(countries) %>% 
+    add_trace(
+      z = ~share_of_industry,
+      text = ~paste(country, country_population, scales::percent(share_of_industry), sep = "<br />")
+    ) %>%
+    share_colorbar() %>% 
+    layout(title = "Share of eCommerce")
 }
 
 plot_country_num_distribution_by_industry <- function(country_nums, clients) {
@@ -43,6 +55,10 @@ base_country_plot <- function(df, countries) {
 
 log_population_colorbar <- function(p) {
   colorbar(p, title = "Population", tickprefix = "10^")
+}
+
+share_colorbar <- function(p) {
+  colorbar(p, title = "", limits = c(0, 1))
 }
 
 geom_density_clean <- function() {
