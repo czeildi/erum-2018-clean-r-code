@@ -37,3 +37,9 @@ head(ordered_country_populations) %>%
   inner_join(countries, by = "country_code")
 tail(ordered_country_populations) %>% 
   inner_join(countries, by = "country_code")
+
+
+# proceed to next step ----------------------------------------------------
+
+source("workshop_tools.R")
+proceed_to("1_cleaned_preparation")
