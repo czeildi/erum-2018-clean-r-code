@@ -61,3 +61,10 @@ home_cities %>%
   ) %>% 
   colorbar(title = "", limits = c(0, 1)) %>% 
   layout(title = "Share of eCommerce")
+
+
+# proceed to next step ----------------------------------------------------
+
+source("workshop_tools.R")
+proceed_to("5_cleaned_ecommerce_dominance")
+
