@@ -49,3 +49,8 @@ home_cities %>%
   ggplot(aes(x = num_country, color = industry)) + 
   geom_density() + 
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+# proceed to next step ----------------------------------------------------
+
+source("workshop_tools.R")
+proceed_to("4_cleaned_industry_comparison")
