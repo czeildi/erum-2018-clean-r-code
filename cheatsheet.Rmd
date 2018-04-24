@@ -1,0 +1,54 @@
+---
+title: "Clean R code cheatsheet"
+subtitle: Clean code in R workshop, eRum 2018
+author: 
+- "Ildi Czeller"
+- "Jeno Pal"
+date: "May 2018"
+output: 
+  html_document:
+    css: cheatsheet.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+```
+
+# 1. Use meaningful names
+
+## Use names that you can pronounce
+
+```{r, class.source="bg-danger"}
+rows_w_miss_val <- df[!complete.cases(df), ]
+```
+
+```{r, class.source="bg-success"}
+rows_with_missing_values <- df[!complete.cases(df), ]
+```
+
+## Use names that are easy to distinguish
+
+Avoid confusion from single, plural
+
+Don't use number suffixes to distinguish variables
+
+## Use one word for one concept
+
+`get`, `retrieve`, `fetch` are synonyms. Pick one if two functions perform
+the same action.
+
+```{r, class.source="bg-danger"}
+get_client_data <- function(...)
+fetch_location_data <- function(...)
+```
+
+```{r, class.source="bg-success"}
+get_client_data <- function(...)
+get_location_data <- function(...)
+```
+
+# 2. Functions
+
+# Literature
+
+Robert C. Martin: Clean code.
