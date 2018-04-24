@@ -41,3 +41,9 @@ home_cities %>%
     text = ~paste(country, prettyNum(num_contact, big.mark = " "), sep = "<br />")
   ) %>%
   colorbar(title = "Population", tickprefix = "10^")
+
+# proceed to next step ----------------------------------------------------
+
+source("workshop_tools.R")
+proceed_to("2_cleaned_population_plots")
+
