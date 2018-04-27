@@ -4,41 +4,55 @@ subtitle: Clean code in R workshop, eRum 2018
 author: 
 - "Ildi Czeller and Jeno Pal"
 date: "May 2018"
+fontsize: 10pt
+header-includes:
+   - \usepackage{listings}
 output: 
-  html_document:
-    theme: united
-    toc: true
+  pdf_document:
+    latex_engine: xelatex
+    pandoc_args: [
+      "-V", "classoption=twocolumn,a4paper",
+      "-V", "geometry=landscape,margin=1cm",
+      "-V", "mainfont=Arial"
+    ]
+  # html_document:
+  #   theme: united
+  #   toc: true
 ---
+\pagenumbering{gobble}
+\fontsize{12}{22}
+\setlength{\parskip}{0pt}
+\setlength{\partopsep}{1pt}
 
 <style type="text/css">
 
 body{ /* Normal  */
-      font-size: 16px;
+      font-size: 12px;
   }
 td {  /* Table  */
   font-size: 8px;
 }
 h1.title {
-  font-size: 38px;
+  font-size: 24px;
   color: DarkRed;
 }
 h1 { /* Header 1 */
-  font-size: 28px;
+  font-size: 20px;
   color: DarkBlue;
 }
 h2 { /* Header 2 */
-    font-size: 22px;
+    font-size: 16px;
   color: DarkBlue;
 }
 h3 { /* Header 3 */
-  font-size: 18px;
+  font-size: 14px;
   color: DarkBlue;
 }
 code.r{ /* Code block */
-    font-size: 14px;
+    font-size: 12px;
 }
 pre { /* Code block - determines code spacing between lines */
-    font-size: 14px;
+    font-size: 12px;
 }
 </style>
 
@@ -50,6 +64,22 @@ knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 _"One difference between a smart programmer and a professional programmer is that the professional understands that __clarity is king__. Professionals use their powers for good and write code that others can understand."_
 
 # 1. Use meaningful names
+
+## Use intent-revealing names
+-- use names comes below this
+
+## Use verbs to name functions
+
+Functions _do_ something with inputs. As such, choose a name that reflects what it
+_does_.
+
+```{r, class.source="bg-danger"}
+client_data <- function(...)
+```
+
+```{r, class.source="bg-success"}
+get_client_data <- function(...)
+```
 
 ## Use names that you can pronounce
 
@@ -90,34 +120,27 @@ get_client_data <- function(...)
 get_location_data <- function(...)
 ```
 
-## Use verbs to name functions
-
-Functions _do_ something with inputs. As such, choose a name that reflects what it
-_does_.
-
-```{r, class.source="bg-danger"}
-client_data <- function(...)
-```
-
-```{r, class.source="bg-success"}
-get_client_data <- function(...)
-```
-
 ## Do not overwrite variables
 
 ```{r, class.source="bg-danger"}
-customers <- get_rid_of_rows_with_missing_values(customers)
+customers <- delete_rows_with_missing_values(customers)
 ```
 
 ```{r, class.source="bg-success"}
-complete_customers <- get_rid_of_rows_with_missing_values(customers)
+complete_customers <- delete_rows_with_missing_values(customers)
 ```
 
 ## Choose names that do not conflict with base functions or keywords
 
+## Do not use noise words
+
+? `dt_customers` vs `customers`
+
 # 2. Functions
 
 ## Don't repeat yourself (DRY)
+
+## A function should do precisely one thing
 
 ## Extract code to function to name it
 
@@ -125,14 +148,16 @@ Even if you don't plan to reuse the code in more than one places.
 
 ## Avoid too many parameters (> 3)
 
-## Pass all parameters to a function as arguments.
+## Pass all parameters to a function as arguments
 
 This makes functions self-contained. Very rare exception: global constants
 with a naming convention that is easy to follow (e.g. `ALL_CAPITAL_LETTERS`).
 
 ## Clearly separate functions with side effects and functions with a return value
 
-## Organize your functions from top to down in abstraction levels.
+Save figure vs return figure: create separate functions.
+
+## Organize your functions from top to down in abstraction levels
 
 Main functions should come first, lower level functions that they use come
 below them.
@@ -154,14 +179,24 @@ customer_lifetime_value <- calculate_lifetime_value(customer)
 
 ## First write a working code, then make it cleaner (= refactor)
 
-## Boy scout rule: if you modify something, think about leaving it cleaner than it was
+## Boy scout rule: if you modify something, think about leaving it a bit cleaner than it was
 
 If you have to touch a piece of code for any reason, consider refactoring it as well.
+You may have better sense/ideas of your code later than writing it first even if you
+struggled to write clean code in the first place.
+
+## Refactoring is not writing it from scratch again
+
+Small refactors are more effective than complete rewrites.
+Guarantees that your code works the same as before and that you can move on
+quickly.
 
 ## Code should be readable also to people not familiar with R
 
 You don't have to overdo refactoring (dont' create a new function for `dplyr::filter`),
 however, hide somewhat cryptic parts to named piece of code (example: `apply(dt, 2, fun)`)
+
+Read code as a book on a high level.
 
 # Literature
 
