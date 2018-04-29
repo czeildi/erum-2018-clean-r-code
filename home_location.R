@@ -25,8 +25,10 @@ ordered_city_populations <- home_cities %>%
 
 head(ordered_city_populations) %>% 
   inner_join(countries, by = "country_code")
+
 tail(ordered_city_populations) %>% 
   inner_join(countries, by = "country_code")
+
 
 ordered_country_populations <- home_cities %>% 
   group_by(country_code) %>% 
@@ -35,6 +37,7 @@ ordered_country_populations <- home_cities %>%
 
 head(ordered_country_populations) %>% 
   inner_join(countries, by = "country_code")
+
 tail(ordered_country_populations) %>% 
   inner_join(countries, by = "country_code")
 
