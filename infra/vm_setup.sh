@@ -8,7 +8,7 @@ git checkout infra
 # edit container num in infra/start_multiple_rstudio.R
 R -f ./infra/start_multiple_rstudio.R
 
-# on local machine:
-# scp -R data root@ip:/home/rstudio
+# copy data from your local machine:
+scp -r data root@ip:/home/rstudio
 
 access your containers at <ip>:20001 ...
