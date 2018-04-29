@@ -44,6 +44,6 @@ home_cities %>%
 
 # proceed to next step ----------------------------------------------------
 
-source("workshop_tools.R")
-proceed_to("2_cleaned_population_plots")
+# source("workshop_tools.R")
+# proceed_to("2_cleaned_population_plots")
 
