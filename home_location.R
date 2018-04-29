@@ -41,5 +41,5 @@ tail(ordered_country_populations) %>%
 
 # proceed to next step ----------------------------------------------------
 
-source("workshop_tools.R")
-proceed_to("1_cleaned_preparation")
+# source("workshop_tools.R")
+# proceed_to("1_cleaned_preparation")
