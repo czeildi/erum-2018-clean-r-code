@@ -52,5 +52,5 @@ home_cities %>%
 
 # proceed to next step ----------------------------------------------------
 
-source("workshop_tools.R")
-proceed_to("4_cleaned_industry_comparison")
+# source("workshop_tools.R")
+# proceed_to("4_cleaned_industry_comparison")
