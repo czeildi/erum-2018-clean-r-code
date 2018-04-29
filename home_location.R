@@ -65,6 +65,6 @@ home_cities %>%
 
 # proceed to next step ----------------------------------------------------
 
-source("workshop_tools.R")
-proceed_to("5_cleaned_ecommerce_dominance")
+# source("workshop_tools.R")
+# proceed_to("5_cleaned_ecommerce_dominance")
 
