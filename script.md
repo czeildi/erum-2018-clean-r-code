@@ -65,3 +65,19 @@
 ## 3
 
 ## 4
+
+- we look at industries from another angle: how strong are they compared to each other? to visualize this we look at the relative strength of the eCommerce industry
+- we could use 4 previously defined functions, otherwise the code would be much longer!
+- use everything we discussed before and refactor it on your own
+- ...
+- let's discuss
+- separate data manipulation and plotting
+- now start with the plotting: function is specific --> name should be specific as well: `plot_ecommerce_share`
+- we made similar plots before: country level, plot % value, only the column name and title are different --> refactor it to `plot_country_shares`
+- we can use `get` to retrieve variable from name as string
+- now refactor the data manipulation: two main steps
+  - `summarize_industry_population_by_country`
+  - `get_population_share_of_industry`: make industry an argument to be explicit and more general at the same time
+  - !! `population_share` vs `share_of_industry` column names
+
+## Summary of take aways
