@@ -130,11 +130,19 @@ customers <- delete_rows_with_missing_values(customers)
 complete_customers <- delete_rows_with_missing_values(customers)
 ```
 
+<!-- Reason: on the one hand it is more difficult to inspect intermediate result on the other hand it is likely that if you run the same code block twice you will get unintended results. -->
+
 ## Choose names that do not conflict with base functions or keywords
 
 ## Do not use noise words
 
 ? `dt_customers` vs `customers`
+
+<!-- ## Avoid sleng or culture specific words and concepts -->
+
+## Avoid magic numbers
+
+Use named variables instead
 
 # 2. Functions
 
@@ -197,6 +205,12 @@ You don't have to overdo refactoring (dont' create a new function for `dplyr::fi
 however, hide somewhat cryptic parts to named piece of code (example: `apply(dt, 2, fun)`)
 
 Read code as a book on a high level.
+
+## Scripts should be self-contained
+
+do not require the manual sourcing of another script or libraries
+
+## Remove dead functions, do not leave commendted-out code
 
 # Literature
 
