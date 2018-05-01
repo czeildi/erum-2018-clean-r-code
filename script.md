@@ -23,10 +23,10 @@
   - we do not expect to call this function with a different kind of data frame so we keep the argument name
   - ungroup after summarize to make the result cleaner: easier to add more code once it is in a function and does not clutter main analysis script
   - we can move this function  to the same file used before
-  - it is always good idea to check the extremes, the following code shows top and bottom countries and cities.
-  - try and refactor it on your own
-  - ...
-  - let's discuss. here we had quite clear duplications
+- it is always good idea to check the extremes, the following code shows top and bottom countries and cities.
+- try and refactor it on your own
+- ...
+- let's discuss. here we had quite clear duplications
   - first I alter the code to make refactoring easier: return top and bottom rowbinded in one data frame
   - first create a big function than split it up to smaller ones
   - name your top-level function: `glimpse_extreme_regions`: new verb to convey that this is not a full result and use general region so we can use it for cities and countries as well
@@ -36,12 +36,31 @@
   - makes it easier to expand the human readable part
   - refactor even the smallest duplication as you will most likely modify it later
   - even the two line function `attach_human_readable_country_metadata` contains two different pieces of logic in the context of your analysis: how to join two different data sources and what would you like to see in a final report. These can change independently and also the first is very likely to come in handy in other parts of the analysis as well so we should separate them to different functions
-  - we had a quite big refactor, it is a good idea to restart our r session (cmd shift F10) and rerun our analysis.
-  - everything looks good, comment out (cmd-shift-c) the last section and proceed to next session
+- we had a quite big refactor, it is a good idea to restart our r session (cmd shift F10) and rerun our analysis.
+- everything looks good, comment out (cmd-shift-c) the last section and proceed to next session
 
 ## 1
 
 ## 2
+
+- here we explore how centralized a country is by calculating the relative size of the population of its biggest city
+- we could already used two functions created previously
+- calculation and plotting is already separated which is good
+- first refactor the calculation, then the plotting part
+- ...
+- let's discuss
+- the part about relative populations should have nothing to do with different clients so we extract to function from 3rd line
+- the variable name forms a good basis for naming our function: `get_population_share_of_top_cities`
+  - !! contains different levels of abstractions
+  - refactor this two 3 additional helper functions
+  - helper functions should be below main function
+  - ungroup in helper functions: have no unexpected side effects!
+- refactor plotting
+- we now have duplication between two coutry level plots, which is a logic of how to plot in plotly: you need iso3c codes of countries, this is a low-level detail
+- now we can have one chain of 3 steps
+- might have created 1 function for 3 steps: good either way
+- we had a quite big refactor, it is a good idea to restart our r session (cmd shift F10) and rerun our analysis.
+- everything looks good, comment out (cmd-shift-c) the last section and proceed to next session
 
 ## 3
 
