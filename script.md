@@ -23,11 +23,16 @@
   - we do not expect to call this function with a different kind of data frame so we keep the argument name
   - ungroup after summarize to make the result cleaner: easier to add more code once it is in a function and does not clutter main analysis script
   - we can move this function  to the same file used before
+
+## 0
+
 - it is always good idea to check the extremes, the following code shows top and bottom countries and cities.
+- we attach country metadata because country names are better readable than country codes
+- quite clear duplications: two block, only difference is grouping level
+- here's an example how to write a function with variable number of arguments: 0, 1, 2, 3
 - try and refactor it on your own
 - ...
 - let's discuss. here we had quite clear duplications
-  - first I alter the code to make refactoring easier: return top and bottom rowbinded in one data frame
   - first create a big function than split it up to smaller ones
   - name your top-level function: `glimpse_extreme_regions`: new verb to convey that this is not a full result and use general region so we can use it for cities and countries as well
   - keep variable names and add `...` for grouping variables
@@ -51,7 +56,7 @@
 - let's discuss
 - the part about relative populations should have nothing to do with different clients so we extract to function from 3rd line
 - the variable name forms a good basis for naming our function: `get_population_share_of_top_cities`
-  - !! contains different levels of abstractions
+  - !! contains different levels of abstractions - határeset hogy érdemes-e függvénybe kiemelni
   - refactor this two 3 additional helper functions
   - helper functions should be below main function
   - ungroup in helper functions: have no unexpected side effects!
@@ -78,6 +83,5 @@
 - now refactor the data manipulation: two main steps
   - `summarize_industry_population_by_country`
   - `get_population_share_of_industry`: make industry an argument to be explicit and more general at the same time
-  - !! `population_share` vs `share_of_industry` column names
 
 ## Summary of take aways
