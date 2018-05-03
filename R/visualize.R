@@ -27,7 +27,7 @@ plot_population_share <- function(top_city_population_share, countries) {
 
 plot_ecommerce_share <- function(ecommerce_share, countries) {
   ecommerce_share %>% 
-    plot_country_shares(metric_name = "share_of_industry", countries) %>% 
+    plot_country_shares(metric_name = "industry_share", countries) %>% 
     layout(title = "Share of eCommerce")
 }
 

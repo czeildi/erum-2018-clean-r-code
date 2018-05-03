@@ -10,7 +10,7 @@ get_population_share_of_industry <- function(industry_populations,
   industry_populations %>% 
     add_country_population() %>% 
     filter(industry == selected_industry) %>% 
-    mutate(share_of_industry = num_contact / country_population)
+    mutate(industry_share = num_contact / country_population)
 }
 
 add_country_population <- function(df) {
