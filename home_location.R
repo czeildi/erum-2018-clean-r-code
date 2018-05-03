@@ -53,11 +53,11 @@ home_cities %>%
   summarize_population(industry, country_code) %>% 
   add_country_population() %>% 
   filter(industry == 'eCommerce') %>% 
-  mutate(share_of_industry = num_contact / country_population) %>% 
+  mutate(industry_share = num_contact / country_population) %>% 
   base_country_plot(countries) %>% 
   add_trace(
-    z = ~share_of_industry, 
-    text = ~paste(country, country_population, scales::percent(share_of_industry), sep = "<br />")
+    z = ~industry_share, 
+    text = ~paste(country, country_population, scales::percent(industry_share), sep = "<br />")
   ) %>% 
   colorbar(title = "", limits = c(0, 1)) %>% 
   layout(title = "Share of eCommerce")
