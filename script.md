@@ -82,6 +82,16 @@
 
 ## 3
 
+- let's look at client metadata: it contains there industry
+- this analysis compares in how many countries a client in each industry is present
+- we can already use a function we previously created
+- let's refactor
+- ...
+- 3 main parts: summary, metadata, plotting, metadata is relevant for plotting
+- again, 1 function in the main script would have been ok as well
+- this is a bit extreme, but to show you how to create functions for ggplot2 layers the theme belongs to density
+- ggplot2 has a different logic than plotly, + is not actually addition: order matters.
+
 ## 4
 
 - we look at industries from another angle: how strong are they compared to each other? to visualize this we look at the relative strength of the eCommerce industry
