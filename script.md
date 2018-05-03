@@ -46,6 +46,19 @@
 
 ## 1
 
+- visual explorations of data are a good way to find anomalies and have a feeling about our data
+- here we plot city and country populations on the map, let's run the code
+- we filter the cities so that the plot is faster
+- we have two steps for each plot: data preparation and plotting
+- refactor it on your own
+- ...
+- many plotly details: how to create maps with plotly
+- one common part of two plots: log colorbar, plotly layers have the plot as first parameter: you can move any set of layers to a function
+- create new R files: summarize and visualize, I choose to move metadata to visualize
+- some details are good to keep: arbitrary choice of filtering population above >1000
+- we can source all functions at one fell swoop
+- we could create big functions, now I chose not to as I do not expect to use them again later and it is good to see some details
+
 ## 2
 
 - here we explore how centralized a country is by calculating the relative size of the population of its biggest city
