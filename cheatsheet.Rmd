@@ -1,23 +1,23 @@
 ---
 title: "Clean R code cheatsheet"
-subtitle: Clean code in R workshop, eRum 2018
-author: 
-- "Ildi Czeller and Jeno Pal"
+author: "Ildi Czeller and Jeno Pal"
 date: "May 2018"
-fontsize: 10pt
-header-includes:
-   - \usepackage{listings}
-output: 
+output:
+  html_document:
+    df_print: paged
+    css: cheatsheet.css
   pdf_document:
+    keep_tex: yes
     latex_engine: xelatex
-    pandoc_args: [
-      "-V", "classoption=twocolumn,a4paper",
-      "-V", "geometry=landscape,margin=1cm",
-      "-V", "mainfont=Arial"
-    ]
-  # html_document:
-  #   theme: united
-  #   toc: true
+    pandoc_args:
+    - -V
+    - classoption=twocolumn,a4paper
+    - -V
+    - geometry=landscape,margin=1cm
+    - -V
+    - mainfont=Arial
+subtitle: Clean code in R workshop, eRum 2018
+fontsize: 10pt
 ---
 \pagenumbering{gobble}
 \fontsize{12}{22}
@@ -60,25 +60,21 @@ pre { /* Code block - determines code spacing between lines */
 knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 ```
 
-
-_"One difference between a smart programmer and a professional programmer is that the professional understands that __clarity is king__. Professionals use their powers for good and write code that others can understand."_
+_"One difference between a smart programmer and a professional programmer is that the professional understands that __clarity is king__. Professionals use their powers for good and write code that others can understand."_ (Robert C. Martin: Clean Code)
 
 # 1. Use meaningful names
 
 ## Use intent-revealing names
--- use names comes below this
 
-## Use verbs to name functions
-
-Functions _do_ something with inputs. As such, choose a name that reflects what it
-_does_.
+The name should tell you what the object does, how it is used and why it exists.
+You don't need a comment to know all these about an object.
 
 ```{r, class.source="bg-danger"}
-client_data <- function(...)
+nd <- 3  # number of days
 ```
 
 ```{r, class.source="bg-success"}
-get_client_data <- function(...)
+number_of_days <- 3
 ```
 
 ## Use names that you can pronounce
@@ -93,17 +89,28 @@ rows_with_missing_values <- df[!complete.cases(df), ]
 
 ## Use names that are easy to distinguish
 
-Avoid confusion stemming from using both single and plural of the same name
+Don't use number suffixes of numbers to distinguish variables.
 
 ```{r, class.source="bg-danger"}
-
+x1 <- 72.3
+x2 <- 34.5
 ```
 
 ```{r, class.source="bg-success"}
-rows_with_missing_values <- df[!complete.cases(df), ]
+latitude <- 72.3
+longitude <- 34.5
 ```
 
-Don't use number suffixes to distinguish variables
+Avoid having close but not the same concepts.
+
+```{r, class.source="bg-danger"}
+client_info <- list("id" = 123, "name" = "Foo Ltd.")
+client_data <- list("id" = 123, "number_of_clients" = 34353)
+```
+
+```{r, class.source="bg-success"}
+client <- list("id" = 123, "name" = "Foo Ltd.", "number_of_clients" = 34353)
+```
 
 ## Use one word for one concept
 
@@ -120,7 +127,25 @@ get_client_data <- function(...)
 get_location_data <- function(...)
 ```
 
+## Use verbs to name functions
+
+Functions _do_ something with inputs. As such, choose a name that reflects what it
+_does_.
+
+```{r, class.source="bg-danger"}
+client_data <- function(...)
+```
+
+```{r, class.source="bg-success"}
+get_client_data <- function(...)
+```
+
 ## Do not overwrite variables
+
+Otherwise
+
+* it is more difficult to inspect intermediate results
+* likely that if you run the same code block twice you will get unintended results
 
 ```{r, class.source="bg-danger"}
 customers <- delete_rows_with_missing_values(customers)
@@ -130,9 +155,18 @@ customers <- delete_rows_with_missing_values(customers)
 complete_customers <- delete_rows_with_missing_values(customers)
 ```
 
-<!-- Reason: on the one hand it is more difficult to inspect intermediate result on the other hand it is likely that if you run the same code block twice you will get unintended results. -->
-
 ## Choose names that do not conflict with base functions or keywords
+
+Find out via calling the Help on the name: `?[name that you want to use]`.
+Example: `?data`.
+
+```{r, class.source="bg-danger"}
+data <- read_csv("customers.csv")
+```
+
+```{r, class.source="bg-success"}
+customer_data <- read_csv("customers.csv")
+```
 
 ## Do not use noise words
 
@@ -148,17 +182,59 @@ Use named variables instead
 
 ## Don't repeat yourself (DRY)
 
+Instead, write a function that encapsulates the functionality in one place.
+
+```{r, class.source="bg-danger"}
+customers[!complete.cases(customers), ]
+locations[!complete.cases(locations), ]
+```
+
+```{r, class.source="bg-success"}
+get_rows_with_missing_data <- function(df) {
+  df[!complete.cases(df), ]
+}
+
+get_rows_with_missing_data(customers)
+get_rows_with_missing_data(locations)
+```
+
 ## A function should do precisely one thing
+
+"One thing": things only one level below the abstraction
+level of the function name.
+
+If it does more than one things, break it into pieces.
+
+```{r, class.source="bg-danger"}
+
+```
+
+```{r, class.source="bg-success"}
+get_rows_with_missing_data <- function(df) {
+  df[!complete.cases(df), ]
+}
+
+get_rows_with_missing_data(customers)
+get_rows_with_missing_data(locations)
+```
 
 ## Extract code to function to name it
 
 Even if you don't plan to reuse the code in more than one places.
 
+```{r}
+
+```
+
 ## Avoid too many parameters (> 3)
+
+If you write a function with too many parameters, write two (or more) functions instead.
 
 ## Pass all parameters to a function as arguments
 
-This makes functions self-contained. Very rare exception: global constants
+This makes functions self-contained. 
+
+Very rare exception: global constants
 with a naming convention that is easy to follow (e.g. `ALL_CAPITAL_LETTERS`).
 
 ## Clearly separate functions with side effects and functions with a return value
