@@ -1,58 +1,49 @@
 ---
-title: "Clean R code cheatsheet"
+title: "Clean R Code cheatsheet"
 author: "Ildi Czeller and Jeno Pal"
 date: "May 2018"
 output:
   html_document:
     df_print: paged
     css: cheatsheet.css
-  pdf_document:
-    keep_tex: yes
-    latex_engine: xelatex
-    pandoc_args:
-    - -V
-    - classoption=twocolumn,a4paper
-    - -V
-    - geometry=landscape,margin=1cm
-    - -V
-    - mainfont=Arial
 subtitle: Clean code in R workshop, eRum 2018
-fontsize: 10pt
 ---
-\pagenumbering{gobble}
-\fontsize{12}{22}
-\setlength{\parskip}{0pt}
-\setlength{\partopsep}{1pt}
 
 <style type="text/css">
 
 body{ /* Normal  */
-      font-size: 12px;
+      font-size: 8px;
   }
 td {  /* Table  */
   font-size: 8px;
 }
 h1.title {
-  font-size: 24px;
+  font-size: 18px;
   color: DarkRed;
 }
+h4.author {
+  font-size: 14px;
+}
+h4.date {
+  font-size: 12px;
+}
 h1 { /* Header 1 */
-  font-size: 20px;
-  color: DarkBlue;
-}
-h2 { /* Header 2 */
-    font-size: 16px;
-  color: DarkBlue;
-}
-h3 { /* Header 3 */
   font-size: 14px;
   color: DarkBlue;
 }
-code.r{ /* Code block */
+h2 { /* Header 2 */
     font-size: 12px;
+  color: DarkBlue;
+}
+h3 { /* Header 3 */
+  font-size: 10px;
+  color: DarkBlue;
+}
+code.r{ /* Code block */
+    font-size: 8px;
 }
 pre { /* Code block - determines code spacing between lines */
-    font-size: 12px;
+    font-size: 8px;
 }
 </style>
 
@@ -62,11 +53,13 @@ knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 
 _"One difference between a smart programmer and a professional programmer is that the professional understands that __clarity is king__. Professionals use their powers for good and write code that others can understand."_ (Robert C. Martin: Clean Code)
 
+\newline
+
 # 1. Use meaningful names
 
 ## Use intent-revealing names
 
-The name should tell you what the object does, how it is used and why it exists.
+The name should tell you the purpose why an object exists, what it does, how it is used.
 You don't need a comment to know all these about an object.
 
 ```{r, class.source="bg-danger"}
@@ -170,13 +163,32 @@ customer_data <- read_csv("customers.csv")
 
 ## Do not use noise words
 
-? `dt_customers` vs `customers`
+Avoid using name elements that show type or contain redundant information.
+
+```{r, class.source="bg-danger"}
+dt_customers <- read_csv("customers.csv")
+locations_info <- read_csv("locations.csv")
+```
+
+```{r, class.source="bg-success"}
+customers <- read_csv("customers.csv")
+locations <- read_csv("locations.csv")
+```
 
 <!-- ## Avoid sleng or culture specific words and concepts -->
 
 ## Avoid magic numbers
 
-Use named variables instead
+Use named variables instead.
+
+```{r, class.source="bg-danger"}
+cities %>% filter(city_population > 10000)
+```
+
+```{r, class.source="bg-success"}
+relevant_city_size <- 10000
+cities %>% filter(city_population > relevant_city_size)
+```
 
 # 2. Functions
 
@@ -201,50 +213,158 @@ get_rows_with_missing_data(locations)
 ## A function should do precisely one thing
 
 "One thing": things only one level below the abstraction
-level of the function name.
+level of the function name. A rule of thumb: you can formulate what the
+function does in a short English paragraph.
 
 If it does more than one things, break it into pieces.
 
 ```{r, class.source="bg-danger"}
-
+glimpse_largest_cities <- function(home_cities, countries) {
+  home_cities %>%
+    group_by(country, city) %>% 
+    summarize(num_contact = sum(num_contact)) %>%
+    arrange(desc(num_contact)) %>%
+    head()
+}
 ```
 
 ```{r, class.source="bg-success"}
-get_rows_with_missing_data <- function(df) {
-  df[!complete.cases(df), ]
+glimpse_largest_cities <- function(home_cities, countries) {
+  home_cities %>%
+    summarize_city_population() %>% 
+    filter_largest_units()
 }
 
-get_rows_with_missing_data(customers)
-get_rows_with_missing_data(locations)
+summarize_city_population <- function(cities) {
+  cities %>%
+    group_by(country, city) %>% 
+    summarize(num_contact = sum(num_contact))
+}
+
+filter_largest_units <- function(contacts_in_units) {
+  contacts_in_units %>% 
+    arrange(desc(num_contact)) %>%
+    head()
+}
 ```
 
-## Extract code to function to name it
+## Extract code to function to express intent
 
 Even if you don't plan to reuse the code in more than one places.
 
-```{r}
+```{r, class.source="bg-danger"}
+home_cities %>% 
+  group_by(country_code, city) %>% 
+  summarize(num_coord_per_city = n_distinct(long, lat)) %>% 
+  ungroup() %>% 
+  filter(num_coord_per_city > 1)
+```
 
+```{r, class.source="bg-success"}
+get_cities_with_multiple_coordinates <- function(home_cities) {
+  home_cities %>% 
+    group_by(country_code, city) %>% 
+    summarize(num_coord_per_city = n_distinct(long, lat)) %>% 
+    ungroup() %>% 
+    filter(num_coord_per_city > 1)
+}
+
+get_cities_with_multiple_coordinates(home_cities)
 ```
 
 ## Avoid too many parameters (> 3)
 
 If you write a function with too many parameters, write two (or more) functions instead.
 
+```{r, class.source="bg-danger"}
+plot_share_of_cities <- function(cities, variable, share_at_least, add_legend) { ... }
+```
+
+```{r, class.source="bg-success"}
+calculate_share_of_cities <- function(cities, variable) { ... }
+  
+keep_at_least <- function(df) { ... }
+
+plot_cities <- function(cities, add_legend) { ... }
+```
+
 ## Pass all parameters to a function as arguments
 
-This makes functions self-contained. 
+This makes functions self-contained.
+
+```{r, class.source="bg-danger"}
+all_clients <- fread("clients.csv")
+
+get_biggest_clients <- functions(top_n) {
+  all_clients %>% arrange(-num_customers) %>% head(top_n)
+}
+
+get_biggest_clients(10)
+```
+
+```{r, class.source="bg-success"}
+all_clients <- fread("clients.csv")
+
+get_biggest_clients <- functions(clients, top_n) {
+  clients %>% arrange(-num_customers) %>% head(top_n)
+}
+
+get_biggest_clients(all_clients, 10)
+```
 
 Very rare exception: global constants
 with a naming convention that is easy to follow (e.g. `ALL_CAPITAL_LETTERS`).
 
 ## Clearly separate functions with side effects and functions with a return value
 
-Save figure vs return figure: create separate functions.
+Side effects make it 
+```{r, class.source="bg-danger"}
+plot_population <- function(country_population) {
+  plot <- ggplot(country_population) + 
+    geom_bar(aes(x = country, y = population))
+  ggsave(plot)
+  plot
+}
+```
+
+```{r, class.source="bg-success"}
+plot_population <- function(country_population) {
+  plot <- ggplot(country_population) + geom_bar(aes(x = country, y = population))
+  plot
+}
+
+save_population_plot <- function(country_population) {
+  ggsave(plot_population(country_population))
+}
+```
 
 ## Organize your functions from top to down in abstraction levels
 
 Main functions should come first, lower level functions that they use come
-below them.
+below them. This aids the natural order of reading and understanding.
+
+```{r, class.source="bg-danger"}
+get_biggest_cities <- function(city_data) { ... }
+
+plot_cities <- function(cities) { ... }
+
+plot_biggest_cities <- function(city_data) {
+  city_data %>% 
+    get_biggest_cities() %>%
+    plot_cities()
+}
+```
+
+```{r, class.source="bg-success"}
+plot_biggest_cities <- function(city_data) {
+  city_data %>% 
+    get_biggest_cities() %>%
+    plot_cities()
+}
+
+get_biggest_cities <- function(city_data) { ... }
+plot_cities <- function(cities) { ... }
+```
 
 # 3. Comments
 
@@ -263,6 +383,11 @@ customer_lifetime_value <- calculate_lifetime_value(customer)
 
 ## First write a working code, then make it cleaner (= refactor)
 
+## Always check that after the refactor functionality did not change
+
+Restarting the session and running your analysis from the beginning is a good
+practice.
+
 ## Boy scout rule: if you modify something, think about leaving it a bit cleaner than it was
 
 If you have to touch a piece of code for any reason, consider refactoring it as well.
@@ -278,16 +403,56 @@ quickly.
 ## Code should be readable also to people not familiar with R
 
 You don't have to overdo refactoring (dont' create a new function for `dplyr::filter`),
-however, hide somewhat cryptic parts to named piece of code (example: `apply(dt, 2, fun)`)
-
-Read code as a book on a high level.
+however, hide cryptic parts to named piece of code (example: `apply(dt, 2, fun)`).
 
 ## Scripts should be self-contained
 
-do not require the manual sourcing of another script or libraries
+Do not require the manual sourcing of another script or libraries, everything that
+should happen to run the script should be contained in the script.
 
-## Remove dead functions, do not leave commendted-out code
+## Remove dead functions, do not leave commented-out code
+
+If you don't use a function anywhere, delete it. For any piece of code, 
+good sign of it is that you have already commented it out - get rid of it.
+
+# RStudio keyboard shortcuts
+
+```{r, eval=TRUE, echo=FALSE}
+library(magrittr)
+library(knitr)
+library(kableExtra)
+
+shortcuts <- rbind(
+  data.frame("Description" = "Insert assignment operator",
+             "Windows and Linux" = "Alt+-",
+             "Mac" = "Option + -"),
+  data.frame("Description" = "Run current line/selection",
+             "Windows and Linux" = "Ctrl+Enter",
+             "Mac" = "Command+Enter"),
+  data.frame("Description" = "Show source code for function at cursor",
+             "Windows and Linux" = "F2",
+             "Mac" = "F2"), 
+  data.frame("Description" = "Goto File/Function",
+             "Windows and Linux" = "Ctrl+.",
+             "Mac" = "Cmd + ."),
+  data.frame("Description" = "Extract function from selection",
+             "Windows and Linux" = "Ctrl+Alt+X",
+             "Mac" = "Command+Option+X"),
+  data.frame("Description" = "Restart R Session",
+             "Windows and Linux" = "Ctrl+Shift+F10",
+             "Mac" = "Command+Shift+F10"),
+  data.frame("Description" = "Reindent lines",
+             "Windows and Linux" = "Ctrl+Shift+I",
+             "Mac" = "Command+Shift+I")
+)
+
+shortcuts %>%
+  kable("html") %>%
+  kable_styling(bootstrap_options = c("striped","condensed"))
+```
+
 
 # Literature
 
-Robert C. Martin: Clean code.
+Robert C. Martin: _Clean code - A Handbook of Agile Software Craftsmanship._
+Prentice Hall, 2009.
