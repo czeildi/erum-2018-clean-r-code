@@ -82,7 +82,7 @@
 
 ## 3
 
-- let's look at client metadata: it contains there industry
+- let's look at client metadata: it contains their industry
 - this analysis compares in how many countries a client in each industry is present
 - we can already use a function we previously created
 - let's refactor
