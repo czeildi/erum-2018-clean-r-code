@@ -317,7 +317,8 @@ with a naming convention that is easy to follow (e.g. `ALL_CAPITAL_LETTERS`).
 
 ## Clearly separate functions with side effects and functions with a return value
 
-Side effects make it 
+Side effects mean that things happen silently: a plot gets saved, a variable's
+value changes globally, etc. Avoid them or make them explicit.
 ```{r, class.source="bg-danger"}
 plot_population <- function(country_population) {
   plot <- ggplot(country_population) + 
