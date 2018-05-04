@@ -1794,7 +1794,7 @@ get_biggest_clients(all_clients, 10)</code></pre>
 </section>
 <section id="clearly-separate-functions-with-side-effects-and-functions-with-a-return-value" class="level2">
 <h2>Clearly separate functions with side effects and functions with a return value</h2>
-<p>Side effects make it</p>
+<p>Side effects mean that things happen silently: a plot gets saved, a variable’s value changes globally, etc. Avoid them or make them explicit.</p>
 <pre class="r bg-danger"><code>plot_population &lt;- function(country_population) {
   plot &lt;- ggplot(country_population) +
     geom_bar(aes(x = country, y = population))
@@ -1802,7 +1802,8 @@ get_biggest_clients(all_clients, 10)</code></pre>
   plot
 }</code></pre>
 <pre class="r bg-success"><code>plot_population &lt;- function(country_population) {
-  plot &lt;- ggplot(country_population) + geom_bar(aes(x = country, y = population))
+  plot &lt;- ggplot(country_population) +
+    geom_bar(aes(x = country, y = population))
   plot
 }
 
