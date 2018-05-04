@@ -1802,7 +1802,8 @@ get_biggest_clients(all_clients, 10)</code></pre>
   plot
 }</code></pre>
 <pre class="r bg-success"><code>plot_population &lt;- function(country_population) {
-  plot &lt;- ggplot(country_population) + geom_bar(aes(x = country, y = population))
+  plot &lt;- ggplot(country_population) +
+    geom_bar(aes(x = country, y = population))
   plot
 }
 

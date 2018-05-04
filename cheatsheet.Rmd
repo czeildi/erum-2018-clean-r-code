@@ -329,7 +329,8 @@ plot_population <- function(country_population) {
 
 ```{r, class.source="bg-success"}
 plot_population <- function(country_population) {
-  plot <- ggplot(country_population) + geom_bar(aes(x = country, y = population))
+  plot <- ggplot(country_population) + 
+    geom_bar(aes(x = country, y = population))
   plot
 }
 
