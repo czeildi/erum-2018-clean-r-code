@@ -47,3 +47,8 @@ home_cities %>%
 # source("workshop_tools.R")
 # proceed_to("2_cleaned_population_plots")
 
+
+# return to beginning -----------------------------------------------------
+
+# source("workshop_tools.R")
+# proceed_to("master")
