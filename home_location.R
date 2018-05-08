@@ -68,3 +68,10 @@ home_cities %>%
 # source("workshop_tools.R")
 # proceed_to("5_cleaned_ecommerce_dominance")
 
+
+# return to beginning -----------------------------------------------------
+
+# source("workshop_tools.R")
+# proceed_to("master")
+
+
