@@ -55,3 +55,8 @@ population_share_of_top_city_in_country %>%
 # source("workshop_tools.R")
 # proceed_to("3_cleaned_capital_effect")
 
+
+# return to beginning -----------------------------------------------------
+
+# source("workshop_tools.R")
+# proceed_to("master")
