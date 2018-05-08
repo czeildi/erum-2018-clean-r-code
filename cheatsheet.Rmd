@@ -1,6 +1,6 @@
 ---
 title: "Clean R Code cheatsheet"
-author: "Ildi Czeller and Jeno Pal"
+author: "Ildi Czeller (@czeildi) and Jenő Pál (@paljenczy)"
 date: "May 2018"
 output:
   html_document:
@@ -82,7 +82,7 @@ rows_with_missing_values <- df[!complete.cases(df), ]
 
 ## Use names that are easy to distinguish
 
-Don't use number suffixes of numbers to distinguish variables.
+Don't use number suffixes to distinguish variables.
 
 ```{r, class.source="bg-danger"}
 x1 <- 72.3
@@ -138,7 +138,7 @@ get_client_data <- function(...)
 Otherwise
 
 * it is more difficult to inspect intermediate results
-* likely that if you run the same code block twice you will get unintended results
+* it may happen that if you run the same code block twice you will get different results
 
 ```{r, class.source="bg-danger"}
 customers <- delete_rows_with_missing_values(customers)
@@ -158,7 +158,7 @@ data <- read_csv("customers.csv")
 ```
 
 ```{r, class.source="bg-success"}
-customer_data <- read_csv("customers.csv")
+customers <- read_csv("customers.csv")
 ```
 
 ## Do not use noise words
@@ -283,7 +283,7 @@ plot_share_of_cities <- function(cities, variable, share_at_least, add_legend) {
 ```{r, class.source="bg-success"}
 calculate_share_of_cities <- function(cities, variable) { ... }
   
-keep_at_least <- function(df) { ... }
+keep_at_least <- function(df, at_least) { ... }
 
 plot_cities <- function(cities, add_legend) { ... }
 ```
@@ -404,7 +404,7 @@ quickly.
 
 ## Code should be readable also to people not familiar with R
 
-You don't have to overdo refactoring (dont' create a new function for `dplyr::filter`),
+You don't have to overdo refactoring (don't create a new function for `dplyr::filter`),
 however, hide cryptic parts to named piece of code (example: `apply(dt, 2, fun)`).
 
 ## Scripts should be self-contained
@@ -417,7 +417,7 @@ should happen to run the script should be contained in the script.
 If you don't use a function anywhere, delete it. For any piece of code, 
 good sign of it is that you have already commented it out - get rid of it.
 
-# RStudio keyboard shortcuts
+# Useful RStudio keyboard shortcuts
 
 ```{r, eval=TRUE, echo=FALSE}
 library(magrittr)
@@ -436,7 +436,7 @@ shortcuts <- rbind(
              "Mac" = "F2"), 
   data.frame("Description" = "Goto File/Function",
              "Windows and Linux" = "Ctrl+.",
-             "Mac" = "Cmd + ."),
+             "Mac" = "Ctrl+."),
   data.frame("Description" = "Extract function from selection",
              "Windows and Linux" = "Ctrl+Alt+X",
              "Mac" = "Command+Option+X"),
@@ -444,12 +444,12 @@ shortcuts <- rbind(
              "Windows and Linux" = "Ctrl+Shift+F10",
              "Mac" = "Command+Shift+F10"),
   data.frame("Description" = "Reindent lines",
-             "Windows and Linux" = "Ctrl+Shift+I",
-             "Mac" = "Command+Shift+I")
+             "Windows and Linux" = "Ctrl+I",
+             "Mac" = "Command+I")
 )
 
 shortcuts %>%
-  kable("html") %>%
+  kable("html", col.names = c("Description", "Windows and Linux", "Mac")) %>%
   kable_styling(bootstrap_options = c("striped","condensed"))
 ```
 
