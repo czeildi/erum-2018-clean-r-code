@@ -63,3 +63,9 @@ max_latitude_by_groups(home_cities, client_id, country_code, city)
 
 # source("workshop_tools.R")
 # proceed_to("1_cleaned_preparation")
+
+
+# return to beginning -----------------------------------------------------
+
+# source("workshop_tools.R")
+# proceed_to("master")
