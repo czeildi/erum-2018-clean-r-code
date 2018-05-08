@@ -51,3 +51,9 @@ home_cities %>%
   summarize_industry_population_by_country(clients) %>% 
   get_population_share_of_industry(selected_industry = "eCommerce") %>% 
   plot_ecommerce_share(countries)
+
+
+# return to beginning -----------------------------------------------------
+
+# source("workshop_tools.R")
+# proceed_to("master")
