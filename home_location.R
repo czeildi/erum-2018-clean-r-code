@@ -34,7 +34,7 @@ home_cities %>%
 
 home_cities %>%
   summarize_population(country_code) %>%
-  attach_country_metadata(countries) %>%
+  inner_join(countries, by = "country_code") %>%
   plot_geo(locations = ~iso3c) %>% 
   add_trace(
     z = ~log10(num_contact), 
